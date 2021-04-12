@@ -32,11 +32,10 @@ public class LoginService implements UserDetailsService {
 		}
 		
 		List<GrantedAuthority> list = new ArrayList<>();
-		/*Set<UserRole> userRoles = userInfo.getUserRoles();
+		Set<UserRole> userRoles = userInfo.getUserRoles();
 		for(UserRole role: userRoles) {
 			list.add(new SimpleGrantedAuthority(role.getRole()));
-		}*/
-		list.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
+		}
 		
 		return new org.springframework.security.core.userdetails.User(userInfo.getUsername(), userInfo.getPassword(), list);
 	}
