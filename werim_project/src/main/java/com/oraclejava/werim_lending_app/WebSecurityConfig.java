@@ -14,6 +14,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests()
 			//.antMatchers("/").permitAll()  //메인 페이지를 막고 싶을 때는 주석처리함
+			.antMatchers("/index").permitAll()
 		    .antMatchers("/login").permitAll()
 		    .antMatchers("/registration").permitAll()
 		    .antMatchers("/admin/**").permitAll()

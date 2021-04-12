@@ -63,11 +63,5 @@ public class LoginController {
 				return "redirect:/login";
 			}
 		}
-		@RequestMapping(value = "/indexcih", method = RequestMethod.GET)
-		public ModelAndView indexcih() {
-			ModelAndView mav = new ModelAndView();
-			mav.setViewName("indexcih");
-			return mav;
 		
-}
 }

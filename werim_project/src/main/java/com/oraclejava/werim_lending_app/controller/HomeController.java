@@ -13,4 +13,25 @@ public class HomeController {
 		mav.setViewName("index");
 		return mav;
 	}
+
+	@RequestMapping(value = "/chicken", method = RequestMethod.GET)
+	public ModelAndView chicken() {
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("chicken");
+		return mav;
+	}
+
+	@RequestMapping(value = "/pizza", method = RequestMethod.GET)
+	public ModelAndView pizza() {
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("pizza");
+		return mav;
+	}
+	
+	@RequestMapping(value = "/middlefood", method = RequestMethod.GET)
+	public ModelAndView middlefood() {
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("middlefood");
+		return mav;
+	}
 }
