@@ -35,7 +35,12 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/login">Login</a>
+            <a sec:authorize-expr="!isAuthenticated()" class="nav-link" href="/login">Login</a>
+            <a sec:authorize-expr="isAuthenticated()" class="nav-link" href="javascript:logout();">Logout</a>
+            <form id="logout" method="post" th:action="@{/logout}"></form>
+            <script>function logout(){
+               $('#logout').submit();
+            }</script>
           </li>
         </ul>
       </div>
