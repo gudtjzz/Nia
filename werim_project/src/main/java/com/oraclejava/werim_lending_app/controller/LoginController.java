@@ -56,8 +56,12 @@ public class LoginController {
 		if(bindingResult.hasErrors()) {
 			return "registration";
 		} else {
+			try {
 			userMService.register(userInfo);
-			
+			}catch(Exception e) {
+				e.printStackTrace();
+				return "registration";
+			}
 			return "redirect:/login";
 		}
 	}
