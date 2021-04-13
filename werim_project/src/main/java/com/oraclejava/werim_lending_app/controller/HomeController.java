@@ -34,4 +34,11 @@ public class HomeController {
 		mav.setViewName("middlefood");
 		return mav;
 	}
+	
+	@RequestMapping(value = "/koreanfood", method = RequestMethod.GET)
+	public ModelAndView koreanfood() {
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("koreanfood");
+		return mav;
+	}
 }

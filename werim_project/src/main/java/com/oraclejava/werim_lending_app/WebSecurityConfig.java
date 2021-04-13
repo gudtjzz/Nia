@@ -28,11 +28,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	public void configure(WebSecurity web) throws Exception{
 		web.ignoring()
-		    .antMatchers("/resources/**", "/static/**", "/css/**", "/js/**","/images/**","/vendor/**");
+		.antMatchers("/resources/**", "/static/**", "/css/**", "/js/**","/images/**","/vendor/**");
 	}
 
 	@Bean
 	public BCryptPasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
+
 	}
 }
