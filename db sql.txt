@@ -1,0 +1,38 @@
+CREATE TABLE USER_INFO 
+   (   "USER_ID" NUMBER primary key, 
+   "USERNAME" VARCHAR2(32 BYTE) NOT NULL, 
+   "PASSWORD" VARCHAR2(100 BYTE) NOT NULL, 
+   "MAIL_ADDRESS" VARCHAR2(256 BYTE) NOT NULL, 
+   "TEL" VARCHAR2(32 BYTE) NOT NULL, 
+   "ZONECODE" NUMBER, 
+   "ADDRESS" VARCHAR2(256 BYTE), 
+   "ADDRESS2" VARCHAR2(256 BYTE)
+);
+
+CREATE TABLE USER_ROLE 
+(   "ROLE_ID" NUMBER primary key, 
+   "USER_ID" NUMBER NOT NULL, 
+   "ROLE" VARCHAR2(32 BYTE) NOT NULL,
+ CONSTRAINT "FK_USER_ROLE" FOREIGN KEY ("USER_ID")
+	  REFERENCES USER_INFO(USER_ID)
+);
+
+create table company(
+company_pk number primary key,
+name varchar2(100),
+zonecode number,
+address varchar2(255),
+address_detail varchar2(255),
+category varchar2(20),
+avg_delivery_time number,
+min_price number
+);
+
+create table company_menu(
+menu_pk number primary key,
+company_pk number,
+name varchar2(50),
+price number,
+constraint fk_company_menu FOREIGN key(company_pk)
+REFERENCES company(company_pk)
+);
