@@ -11,6 +11,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	@Override
+
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests()
 			.antMatchers("/","/login","/registration").permitAll()
@@ -24,7 +25,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		    .and()
 		    .logout();	// 로그아웃 사용
 	}
-	
 	@Override
 	public void configure(WebSecurity web) throws Exception{
 		web.ignoring()
