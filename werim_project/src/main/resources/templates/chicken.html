@@ -35,27 +35,17 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/login">Login</a>
+            <a sec:authorize-expr="!isAuthenticated()" class="nav-link" href="/login">Login</a>
+            <a sec:authorize-expr="isAuthenticated()" class="nav-link" href="javascript:logout();">Logout</a>
+            <form id="logout" method="post" th:action="@{/logout}"></form>
+            <script>function logout(){
+               $('#logout').submit();
+            }</script>
           </li>
         </ul>
       </div>
     </div>
   </nav>
-
-  <!-- Page Content -->
-  <div class="container">
-   <!-- 기본 가테고리  -->
-<div class="SMS_BaseMenu_01 JKJ_loginDisplay"> 
-   <div class="container_Box">
-      <ul>
-	<li><a href="①">③MENU<span>|</span></a></li>
-	<li><a href="①">③MENU<span>|</span></a></li>
-	<li><a href="①">③MENU<span>|</span></a></li>
-	<li><a href="①">③MENU<span>|</span></a></li>
-	<li><a href="①">③MENU</a></li>
-      </ul>
-   </div>
-</div>
     <!-- Page Features -->
     <div class="row text-center">
 

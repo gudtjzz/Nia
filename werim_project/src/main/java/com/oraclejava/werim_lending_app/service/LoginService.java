@@ -36,7 +36,6 @@ public class LoginService implements UserDetailsService {
 		for(UserRole role: userRoles) {
 			list.add(new SimpleGrantedAuthority(role.getRole()));
 		}
-		//list.add(new SimpleGrantedAuthority("admin"));
 		
 		return new org.springframework.security.core.userdetails.User(userInfo.getUsername(), userInfo.getPassword(), list);
 	}
