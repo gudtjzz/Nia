@@ -11,13 +11,13 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	@Override
-	protected void configure(HttpSecurity http) throws Exception {
-		http.authorizeRequests()
-			//.antMatchers("/").permitAll()  //메인 페이지를 막고 싶을 때는 주석처리함
-			.antMatchers("/index").permitAll()
-		    .antMatchers("/login").permitAll()
-		    .antMatchers("/registration").permitAll()
-		    .antMatchers("/admin/**").permitAll()
+    protected void configure(HttpSecurity http) throws Exception {
+        http.authorizeRequests()
+            //.antMatchers("/").permitAll()  //메인 페이지를 막고 싶을 때는 주석처리함
+            .antMatchers("/index").permitAll()
+            .antMatchers("/login").permitAll()
+            .antMatchers("/registration").permitAll()
+            .antMatchers("/admin/**").permitAll()
 		    //.antMatchers("/admin/**").hasAnyAuthority("role_admin").anyRequest().authenticated()
 		    .and()
 		    .formLogin()
