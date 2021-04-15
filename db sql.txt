@@ -20,12 +20,12 @@ CREATE TABLE USER_ROLE
 create table company(
 company_pk number primary key,
 name varchar2(100),
-zonecode number,
 address varchar2(255),
-address_detail varchar2(255),
 category varchar2(20),
 avg_delivery_time number,
-min_price number
+min_price number,
+oper_time varchar2(20),
+origin_info varchar2(255)
 );
 
 create table company_menu(
@@ -33,6 +33,7 @@ menu_pk number primary key,
 company_pk number,
 name varchar2(50),
 price number,
+image_url varchar2(400),
 constraint fk_company_menu FOREIGN key(company_pk)
 REFERENCES company(company_pk)
 );
