@@ -1,0 +1,33 @@
+@charset "utf-8";
+@import url('https://fonts.googleapis.com/css?family=Nanum+Gothic');
+
+
+
+#menu1{
+	background: rgb(192, 192, 192);
+}
+
+#menu1 ul{
+	width: auto;
+	margin: 0 auto;
+	overflow: hidden;
+}
+
+#menu1 ul li{
+	float: left;
+	width: 11.1%;
+	height: 100%;
+	line-height: 50px;
+	text-align: center;
+	background: rgb(219, 220, 225);	
+}
+
+#menu1 ul li a{
+	display: block;
+}
+
+
+#menu1 ul li a:hover{
+	background: #138535;
+	color: #fff;
+}
