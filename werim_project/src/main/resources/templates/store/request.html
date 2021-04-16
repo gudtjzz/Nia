@@ -4,14 +4,25 @@
 <meta charset="UTF-8">
 <title>요청</title>
 <script src="/jquery/jquery.min.js"></script>
+<link href="/bootstrap/css/bootstrap.css">
 </head>
 <body>
 
 <div th:fragment="store-request-page">
+<div th:if="${#authentication.principal.userinfo.store_state == '0'}">
 <form id="form" th:action="@{/store/request}" method="post" >
-<input type="hidden" th:value="${#authentication.principal.userinfo.user_id}" name="username">
-<input type="submit" value="신청">
-</form>
+	<span>업체회원으로 전환 신청하기!</span>
+	<input type="hidden" th:value="${#authentication.principal.userinfo.user_id}" name="username">
+	<input type="submit" value="신청">
+</form>	
+</div>
+<div th:if="${#authentication.principal.userinfo.store_state == '1'}">
+	<span>업체회원 신청완료 현재 관리자의 승인을 대기중입니다!</span>
+</div>
+<div th:if="${#authentication.principal.userinfo.store_state == '2'}">
+
+
+</div>
 </div>
 </body>
 </html>
