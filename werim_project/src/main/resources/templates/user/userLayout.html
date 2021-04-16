@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
-	<title>Admin</title>
+	<title>User</title>
 	<meta charset="UTF-8"/>
 	<link rel="stylesheet" type="text/css" 
 		th:href="@{/css/admin.css}"
@@ -15,7 +15,7 @@
 	<nav class="navbar navbar-inverse navbar-fixed-top">
 		<div class="container-fluid">
 			<div class="navbar-header">
-				<a class="navbar-brand" href="#">BookLending</a>
+				<a class="navbar-brand" href="/index">여기저기거기</a>
 			</div>
 			<form method="POST" th:action="@{/logout}">
 				<button class="btn btn-link pull-right navbar-brand"
@@ -29,10 +29,10 @@
 			<div class="col-sm-2 sidebar">
 				<ul class="nav nav-pills nav-stacked">
 					<li role="presentation">
-						<a th:href="@{'/admin/userList'}">사용자 관리</a>
+						<a th:href="@{'/userUpdate'}">내정보수정</a>
 					</li>
 					<li role="presentation">
-						<a th:href="@{'/admin/bookList'}">대출 서적 관리</a>
+						<a th:href="@{'#'}">회원탈퇴</a>
 					</li>
 				</ul>
 			</div>

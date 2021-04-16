@@ -37,6 +37,7 @@
           </li>
           <li class="nav-item">
             <a sec:authorize-expr="!isAuthenticated()" class="nav-link" href="/login">Login</a>
+             <a sec:authorize-expr="isAuthenticated()" class="nav-link" href="/userLayout">마이페이지</a>
             <a sec:authorize-expr="isAuthenticated()" class="nav-link" href="javascript:logout();">Logout</a>
             <form id="logout" method="post" th:action="@{/logout}"></form>
             <script>function logout(){
@@ -124,50 +125,50 @@ ul{
           </div>
 <div class="col-lg-4 col-md-6 mb-4">
             <div class="card h-100">
-              <a href="#"><img class="card-img-top" src="/images/category-06.png" alt=""></a>
+              <a href="/japanesefood"><img class="card-img-top" src="/images/category-06.png" alt=""></a>
               <div class="card-body">
                 <h4 class="card-title">
-                  <a href="#">일식/돈까스</a>
+                  <a href="/japanesefood">일식/돈까스</a>
                 </h4>
               </div>
             </div>
           </div>
 <div class="col-lg-4 col-md-6 mb-4">
             <div class="card h-100">
-              <a href="#"><img class="card-img-top" src="/images/category-07.png" alt=""></a>
+              <a href="/jokbo"><img class="card-img-top" src="/images/category-07.png" alt=""></a>
               <div class="card-body">
                 <h4 class="card-title">
-                  <a href="#">족발/보쌈</a>
+                  <a href="jokbo">족발/보쌈</a>
                 </h4>
               </div>
             </div>
           </div>
 <div class="col-lg-4 col-md-6 mb-4">
             <div class="card h-100">
-              <a href="#"><img class="card-img-top" src="/images/category-08.png" alt=""></a>
+              <a href="/yasik"><img class="card-img-top" src="/images/category-08.png" alt=""></a>
               <div class="card-body">
                 <h4 class="card-title">
-                  <a href="#">야식</a>
+                  <a href="/yasik">야식</a>
                 </h4>
               </div>
             </div>
           </div>
           <div class="col-lg-4 col-md-6 mb-4">
             <div class="card h-100">
-              <a href="#"><img class="card-img-top" src="/images/category-09.png" alt=""></a>
+              <a href="/boonsik"><img class="card-img-top" src="/images/category-09.png" alt=""></a>
               <div class="card-body">
                 <h4 class="card-title">
-                  <a href="#">분식</a>
+                  <a href="/booksik">분식</a>
                 </h4>
               </div>
             </div>
           </div>
           <div class="col-lg-4 col-md-6 mb-4">
             <div class="card h-100">
-              <a href="#"><img class="card-img-top" src="/images/category-11.png" alt=""></a>
+              <a href="/cafe"><img class="card-img-top" src="/images/category-11.png" alt=""></a>
               <div class="card-body">
                 <h4 class="card-title">
-                  <a href="#">카페/디저트</a>
+                  <a href="/cafe">카페/디저트</a>
                 </h4>
               </div>
             </div>

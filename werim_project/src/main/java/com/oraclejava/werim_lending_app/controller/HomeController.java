@@ -41,4 +41,53 @@ public class HomeController {
 		mav.setViewName("koreanfood");
 		return mav;
 	}
+	
+	@RequestMapping(value = "/japanesefood", method = RequestMethod.GET)
+	public ModelAndView japanesefood() {
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("japanesefood");
+		return mav;
+	}
+	
+	@RequestMapping(value = "/jokbo", method = RequestMethod.GET)
+	public ModelAndView jokbo() {
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("jokbo");
+		return mav;
+	}
+	
+	@RequestMapping(value = "/yasik", method = RequestMethod.GET)
+	public ModelAndView yasik() {
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("yasik");
+		return mav;
+	}
+	
+	@RequestMapping(value = "/boonsik", method = RequestMethod.GET)
+	public ModelAndView boonsik() {
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("boonsik");
+		return mav;
+	}
+	
+	@RequestMapping(value = "/cafe", method = RequestMethod.GET)
+	public ModelAndView cafe() {
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("cafe");
+		return mav;
+	}
+	
+	@RequestMapping(value = "/userLayout", method = RequestMethod.GET)
+	public ModelAndView userLayout() {
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("userLayout");
+		return mav;
+	}
+	
+	@RequestMapping(value = "/userUpdate", method = RequestMethod.GET)
+	public ModelAndView userUpdate() {
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("userUpdate");
+		return mav;
+	}
 }
