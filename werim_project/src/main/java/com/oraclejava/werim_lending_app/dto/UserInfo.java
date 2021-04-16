@@ -3,6 +3,7 @@ package com.oraclejava.werim_lending_app.dto;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -14,7 +15,9 @@ import javax.persistence.Transient;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.validator.constraints.Length;
+import org.springframework.boot.context.properties.bind.DefaultValue;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -52,6 +55,9 @@ public class UserInfo {
 	private String address;
 	
 	private String address2;
+	
+	@Column
+	private String store_state = "0";
 	
 	@OneToMany(mappedBy = "userInfo", cascade = CascadeType.ALL)
 	private Set<UserRole> userRoles;

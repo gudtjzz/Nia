@@ -12,6 +12,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.oraclejava.werim_lending_app.CustomUser;
 import com.oraclejava.werim_lending_app.dao.UserInfoRepository;
 import com.oraclejava.werim_lending_app.dto.UserInfo;
 import com.oraclejava.werim_lending_app.dto.UserRole;
@@ -37,6 +39,6 @@ public class LoginService implements UserDetailsService {
 			list.add(new SimpleGrantedAuthority(role.getRole()));
 		}
 		
-		return new org.springframework.security.core.userdetails.User(userInfo.getUsername(), userInfo.getPassword(), list);
+		return new CustomUser(userInfo.getUsername(), userInfo.getPassword(), list, userInfo);
 	}
 }

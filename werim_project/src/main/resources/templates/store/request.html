@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>요청</title>
+<script src="/jquery/jquery.min.js"></script>
+</head>
+<body>
+
+<div th:fragment="store-request-page">
+<form id="form" th:action="@{/store/request}" method="post" >
+<input type="hidden" th:value="${#authentication.principal.userinfo.user_id}" name="username">
+<input type="submit" value="신청">
+</form>
+</div>
+</body>
+</html>
