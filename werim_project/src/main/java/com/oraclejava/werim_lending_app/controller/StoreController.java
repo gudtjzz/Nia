@@ -3,6 +3,7 @@ package com.oraclejava.werim_lending_app.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,10 +26,18 @@ public class StoreController {
 	
 	@PostMapping("/request")
 	public String requestStore(@AuthenticationPrincipal CustomUser user) {
+		System.out.println("post");
 		UserInfo userinfo = user.getUserinfo();
 		userinfo.setStore_state("1");
+		
 		userinfoRepository.save(userinfo);
 		
 		return "redirect:/store/request";
+	}
+	
+	@GetMapping("/register")
+	@CrossOrigin(origins = "http://apis.data.go.kr")
+	public String register() {
+		return "/store/register";
 	}
 }

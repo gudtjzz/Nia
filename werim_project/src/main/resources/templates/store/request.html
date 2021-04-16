@@ -4,11 +4,11 @@
 <meta charset="UTF-8">
 <title>요청</title>
 <script src="/jquery/jquery.min.js"></script>
-<link href="/bootstrap/css/bootstrap.css">
+<link href="/bootstrap/css/bootstrap.css" rel="stylesheet">
 </head>
 <body>
 
-<div th:fragment="store-request-page">
+<div th:fragment="store-request-page" class="container">
 <div th:if="${#authentication.principal.userinfo.store_state == '0'}">
 <form id="form" th:action="@{/store/request}" method="post" >
 	<span>업체회원으로 전환 신청하기!</span>
@@ -19,8 +19,24 @@
 <div th:if="${#authentication.principal.userinfo.store_state == '1'}">
 	<span>업체회원 신청완료 현재 관리자의 승인을 대기중입니다!</span>
 </div>
-<div th:if="${#authentication.principal.userinfo.store_state == '2'}">
-
+<div th:if="${#authentication.principal.userinfo.store_state == '2'}" class="row">
+<table border="1" class="table">
+	<caption class="text-right"><button class="btn btn-success" onclick="javascript:location.href='/store/register'">점포 추가</button></caption>
+	<thead>
+		<tr>
+			<th>업체명</th>
+			<th>비고</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>더미테스트업체1</td>
+			<td><button class="btn btn-primary">수정</button>
+			<button class="btn btn-danger">삭제</button>
+			</td>
+		</tr>
+	</tbody>
+</table>
 
 </div>
 </div>

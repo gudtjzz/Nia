@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>요청</title>
+<script src="/jquery/jquery.min.js"></script>
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<link href="/bootstrap/css/bootstrap.css" rel="stylesheet">
+</head>
+<body>
+
+<div th:fragment="store-register-page" class="container">
+<form th:action="@{/store/register}">
+<table>
+	<tr>
+		<td><label>점포명</label></td>
+		<td colspan="2"><input type="text" required><br></td>
+	</tr>
+	<tr>
+		<td><label>점포주명</label></td>
+		<td colspan="2"><input type="text" required></td>
+	</tr>
+	<tr>
+		<td><label>사업자번호</label></td>
+		<td colspan="2"><input type="text"></td>
+	</tr>
+	<tr>
+		<td><label>주소</label></td>
+		<td><input type="text" id="address"></td>
+		<td><button id="search">주소검색</button></td>
+	</tr>
+	<tr>
+		<td><label>전화번호</label></td>
+		<td colspan="2"><input type="tel"></td>
+	</tr>
+	<tr>
+		<td><label>프렌차이즈</label></td>
+		<td colspan="2"><input type="text"></td>
+	</tr>
+	<tr><td colspan="3" class="text-right"><input type="submit" class="btn btn-primary" value="등록"></td></tr>
+</table>
+</form>
+</div>
+
+<script>
+$('#search').on('click',function(){
+	
+$.ajax({method : 'get',
+		url : 'http://apis.data.go.kr/1230000/UsrInfoService',
+		//headers : { 'Access-Control-Allow-Origin' : '*'},
+		beforeSend : function(hd){
+			hd.setRequestHeader('Access-Control-Allow-Origin', '*');
+		},
+		data : {numOfRows : 1,
+				pageNo : 1,
+				bizno : '1138626635',
+				//ServiceKey : '0R8YhUNqyDQDCC0mDbGPhN%2B%2BT9%2F18EtZZcrM0cu3JmEkWxNzlV0zUlrZYyyE1gvHdjNBVz54Ak9fVO6leQOfEQ%3D%3D',
+				ServiceKey : '0R8YhUNqyDQDCC0mDbGPhN++T9/18EtZZcrM0cu3JmEkWxNzlV0zUlrZYyyE1gvHdjNBVz54Ak9fVO6leQOfEQ==',
+				inqryDiv : 3,
+				type : 'json'
+				} ,
+		success : function(result){
+			console.log(result);
+		}});
+
+	new daum.Postcode({
+        oncomplete: function(data) {
+            $('#address').val(data.roadAddress);
+        }
+    }).open();
+});
+</script>
+</body>
+</html>
