@@ -36,7 +36,6 @@ public class StoreController {
 	}
 	
 	@GetMapping("/register")
-	@CrossOrigin(origins = "http://apis.data.go.kr")
 	public String register() {
 		return "/store/register";
 	}

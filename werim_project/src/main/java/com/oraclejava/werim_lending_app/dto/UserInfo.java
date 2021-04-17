@@ -50,7 +50,7 @@ public class UserInfo {
 	
 	private String tel;
 	
-	private int zonecode;
+	private Integer zonecode;
 	
 	private String address;
 	

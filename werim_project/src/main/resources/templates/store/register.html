@@ -44,25 +44,6 @@
 
 <script>
 $('#search').on('click',function(){
-	
-$.ajax({method : 'get',
-		url : 'http://apis.data.go.kr/1230000/UsrInfoService',
-		//headers : { 'Access-Control-Allow-Origin' : '*'},
-		beforeSend : function(hd){
-			hd.setRequestHeader('Access-Control-Allow-Origin', '*');
-		},
-		data : {numOfRows : 1,
-				pageNo : 1,
-				bizno : '1138626635',
-				//ServiceKey : '0R8YhUNqyDQDCC0mDbGPhN%2B%2BT9%2F18EtZZcrM0cu3JmEkWxNzlV0zUlrZYyyE1gvHdjNBVz54Ak9fVO6leQOfEQ%3D%3D',
-				ServiceKey : '0R8YhUNqyDQDCC0mDbGPhN++T9/18EtZZcrM0cu3JmEkWxNzlV0zUlrZYyyE1gvHdjNBVz54Ak9fVO6leQOfEQ==',
-				inqryDiv : 3,
-				type : 'json'
-				} ,
-		success : function(result){
-			console.log(result);
-		}});
-
 	new daum.Postcode({
         oncomplete: function(data) {
             $('#address').val(data.roadAddress);
