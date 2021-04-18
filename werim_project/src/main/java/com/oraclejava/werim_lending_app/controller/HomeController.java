@@ -77,17 +77,5 @@ public class HomeController {
 		return mav;
 	}
 	
-	@RequestMapping(value = "/userLayout", method = RequestMethod.GET)
-	public ModelAndView userLayout() {
-		ModelAndView mav = new ModelAndView();
-		mav.setViewName("userLayout");
-		return mav;
-	}
 	
-	@RequestMapping(value = "/userUpdate", method = RequestMethod.GET)
-	public ModelAndView userUpdate() {
-		ModelAndView mav = new ModelAndView();
-		mav.setViewName("userUpdate");
-		return mav;
-	}
 }
