@@ -1,6 +1,9 @@
 package com.oraclejava.werim_lending_app.controller;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -12,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.oraclejava.werim_lending_app.CustomUser;
 import com.oraclejava.werim_lending_app.dao.UserInfoRepository;
 import com.oraclejava.werim_lending_app.dto.UserInfo;
 
@@ -84,12 +88,12 @@ public class UserController {
 			
 			model.addAttribute("contents", 
 					"user/userDelete :: userDelete_contents");
-			
 			return "user/userLayout";
 		}
 		@PostMapping(params = "delete", value = "/userDelete")
-		public String userDelete(UserInfo userInfo) {
-			userInfoRepository.deleteById(userInfo.getUser_id());
-			return "redirect:/index";
+		public String userDelete(@AuthenticationPrincipal CustomUser user,HttpSession session) {
+			userInfoRepository.deleteById(user.getUserinfo().getUser_id());
+			session.invalidate();
+			return "redirect:/";
 		}
 }	
