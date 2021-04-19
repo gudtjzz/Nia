@@ -18,23 +18,33 @@ CREATE TABLE USER_ROLE
 	  REFERENCES USER_INFO(USER_ID)
 );
 
-create table company(
-company_pk number primary key,
+create table store(
+store_pk number primary key,
+user_id number,
 name varchar2(100),
+owner_name varchar2(100),
 address varchar2(255),
+tel varchar2(11),
+business_number varchar2(10),
 category varchar2(20),
+franchise number,
 avg_delivery_time number,
 min_price number,
 oper_time varchar2(20),
 origin_info varchar2(255)
 );
 
-create table company_menu(
+create table store_menu(
 menu_pk number primary key,
-company_pk number,
+store_pk number,
 name varchar2(50),
 price number,
 image_url varchar2(400),
-constraint fk_company_menu FOREIGN key(company_pk)
-REFERENCES company(company_pk)
+constraint fk_store_menu FOREIGN key(store_pk)
+REFERENCES store(store_pk)
+);
+
+create table franchise(
+franchise_pk number primary key,
+name varchar2(50) unique
 );
