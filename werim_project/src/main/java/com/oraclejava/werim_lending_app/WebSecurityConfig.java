@@ -14,7 +14,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests()
-			.antMatchers("/","/login","/registration").permitAll()
+			.antMatchers("/","/login","/registration","/user").permitAll()
 		    .antMatchers("/admin/**").hasAnyAuthority("ROLE_ADMIN")
 		    .anyRequest().authenticated()
 		    .and()
@@ -28,7 +28,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	public void configure(WebSecurity web) throws Exception{
 		web.ignoring()
-		.antMatchers("/resources/**", "/static/**", "/css/**", "/js/**","/images/**","/vendor/**");
+		.antMatchers("/resources/**","/css/**","/js/**","/images/**","/vendor/**","/jquery/**","/bootstrap/**");
 	}
 
 	@Bean

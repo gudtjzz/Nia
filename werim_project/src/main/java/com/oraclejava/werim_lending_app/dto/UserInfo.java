@@ -3,6 +3,7 @@ package com.oraclejava.werim_lending_app.dto;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -18,10 +19,12 @@ import org.hibernate.validator.constraints.Length;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 @Entity
 @Getter
 @Setter
+@ToString
 @Table(name="user_info")
 @SequenceGenerator(allocationSize = 1, name = "user_info_gen", sequenceName = "user_info_seq")
 public class UserInfo {
@@ -47,11 +50,14 @@ public class UserInfo {
 	
 	private String tel;
 	
-	private int zonecode;
+	private Integer zonecode;
 	
 	private String address;
 	
 	private String address2;
+	
+	@Column
+	private String store_state = "0";
 	
 	@OneToMany(mappedBy = "userInfo", cascade = CascadeType.ALL)
 	private Set<UserRole> userRoles;

@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+
+<head>
+<title>정보수정</title>
+
+<script
+	src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script>
+	function sample4_execDaumPostcode() {
+		new daum.Postcode(
+				{
+					oncomplete : function(data) {
+						// 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
+						// 도로명 주소의 노출 규칙에 따라 주소를 표시한다.
+						// 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+						var roadAddr = data.roadAddress; // 도로명 주소 변수
+						var extraRoadAddr = ''; // 참고 항목 변수
+
+						// 법정동명이 있을 경우 추가한다. (법정리는 제외)
+						// 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+						if (data.bname !== '' && /[동|로|가]$/g.test(data.bname)) {
+							extraRoadAddr += data.bname;
+						}
+						// 건물명이 있고, 공동주택일 경우 추가한다.
+						if (data.buildingName !== '' && data.apartment === 'Y') {
+							extraRoadAddr += (extraRoadAddr !== '' ? ', '
+									+ data.buildingName : data.buildingName);
+						}
+						// 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+						if (extraRoadAddr !== '') {
+							extraRoadAddr = ' (' + extraRoadAddr + ')';
+						}
+
+						// 우편번호와 주소 정보를 해당 필드에 넣는다.
+						document.getElementById('sample4_postcode').value = data.zonecode;
+						document.getElementById("sample4_roadAddress").value = roadAddr;
+						document.getElementById("sample4_jibunAddress").value = data.jibunAddress;
+
+						// 참고항목 문자열이 있을 경우 해당 필드에 넣는다.
+						if (roadAddr !== '') {
+							document.getElementById("sample4_extraAddress").value = extraRoadAddr;
+						} else {
+							document.getElementById("sample4_extraAddress").value = '';
+						}
+
+						var guideTextBox = document.getElementById("guide");
+						// 사용자가 '선택 안함'을 클릭한 경우, 예상 주소라는 표시를 해준다.
+						if (data.autoRoadAddress) {
+							var expRoadAddr = data.autoRoadAddress
+									+ extraRoadAddr;
+							guideTextBox.innerHTML = '(예상 도로명 주소 : '
+									+ expRoadAddr + ')';
+							guideTextBox.style.display = 'block';
+
+						} else if (data.autoJibunAddress) {
+							var expJibunAddr = data.autoJibunAddress;
+							guideTextBox.innerHTML = '(예상 지번 주소 : '
+									+ expJibunAddr + ')';
+							guideTextBox.style.display = 'block';
+						} else {
+							guideTextBox.innerHTML = '';
+							guideTextBox.style.display = 'none';
+						}
+					}
+				}).open();
+	}
+</script>
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="description" content="">
+<meta name="author" content="">
+<!-- Bootstrap core CSS -->
+<link href="@{vendor/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
+
+<!-- Custom styles for this template -->
+<link href="@{css/shop-homepage.css}" rel="stylesheet">
+<link rel="stylesheet" type="text/css" th:href="@{/css/admin.css}">
+
+</head>
+<body>
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+		<div class="container">
+			<a class="navbar-brand" href="/">여기저기거기</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse"
+				data-target="#navbarResponsive" aria-controls="navbarResponsive"
+				aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarResponsive">
+				<ul class="navbar-nav ml-auto">
+					<li class="nav-item active"><a class="nav-link" href="/">Home
+							<span class="sr-only">(current)</span>
+					</a></li>
+					<li class="nav-item"><a sec:authorize-expr="isAuthenticated()"
+						class="nav-link" href="javascript:logout();">Logout</a>
+						<form id="logout" method="post" th:action="@{/logout}"></form></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+<body>
+	<div class="container" th:fragment="userUpdate_contents">
+		<div class="row">
+			<div class="col-md-6 col-md-offset-3">
+				<form action="#" th:action="@{/user/userUpdate}"
+					th:object="${userInfo}" method="post" class="form-horizontal">
+					<h2>회원정보수정</h2>
+					<div class="form-group">
+						<div class="col-sm-9">
+							<input type="text" th:field="*{username}" class="form-control" readonly />
+							<label th:if="${#fields.hasErrors('username')}"
+								th:errors="*{username}" class="validation-message"></label>
+
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-9">
+							<input type="text" placeholder="E-mail 입력"
+								th:field="*{mail_address}" class="form-control" /> <label
+								th:if="${#fields.hasErrors('mail_address')}"
+								th:errors="*{mail_address}" class="validation-message"></label>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-9">
+							<input type="password" placeholder="패스워드 입력"
+								th:field="*{password}" class="form-control" required/> <label
+								th:if="${#fields.hasErrors('password')}" th:errors="*{password}"
+								class="validation-message"></label>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-9">
+							<input type="password" placeholder="패스워드 확인"
+								th:field="*{password2}" class="form-control" required/> <label
+								th:if="${#fields.hasErrors('password2')}"
+								th:errors="*{password2}" class="validation-message"></label>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-9">
+							<input type="tel" placeholder="전화 번호" th:field="*{tel}"
+								class="form-control" /> <label
+								th:if="${#fields.hasErrors('tel')}" th:errors="*{tel}"
+								class="validation-message"></label>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-9">
+							<input type="text" id="sample4_postcode" placeholder="우편번호"
+								th:field="*{zonecode}"> <input type="button"
+								onclick="sample4_execDaumPostcode()" value="우편번호 찾기"><br>
+							<input type="text" id="sample4_roadAddress" placeholder="도로명주소"
+								th:field="*{address}"> <input type="text"
+								id="sample4_jibunAddress" placeholder="지번주소"> <span
+								id="guide" style="color: #999; display: none"></span> <input
+								type="text" id="sample4_detailAddress" placeholder="상세주소" th:field="*{address2}">
+							<div class="form-group"></div>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-9">
+							<button type="submit" name="update"
+								class="btn btn-primary btn-block">수 정</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	<!-- Bootstrap core JavaScript -->
+	<script src="vendor/jquery/jquery.min.js"></script>
+	<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+</body>
+</body>
+</html>
