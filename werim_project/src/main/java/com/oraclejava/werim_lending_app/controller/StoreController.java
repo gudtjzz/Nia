@@ -1,11 +1,9 @@
 package com.oraclejava.werim_lending_app.controller;
 
 import java.io.IOException;
-import java.net.URL;
 import java.util.Date;
 import java.util.List;
 
-import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -14,8 +12,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.commons.CommonsMultipartFile;
-import org.springframework.web.multipart.support.ByteArrayMultipartFileEditor;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.oraclejava.werim_lending_app.CustomUser;
@@ -33,7 +29,7 @@ public class StoreController {
 
 	@Autowired
 	private UserInfoRepository userinfoRepository;
-	
+
 	@Autowired
 	private FranchiseRepository franchiseRepository;
 	
@@ -49,6 +45,7 @@ public class StoreController {
 	
 	@PostMapping("/request")
 	public String requestStore(@AuthenticationPrincipal CustomUser user) {
+		System.out.println("post");
 		UserInfo userinfo = user.getUserinfo();
 		userinfo.setStore_state("1");
 		
