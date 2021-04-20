@@ -31,7 +31,8 @@ franchise number,
 avg_delivery_time number,
 min_price number,
 oper_time varchar2(20),
-origin_info varchar2(255)
+origin_info varchar2(255),
+img_pk number
 );
 
 create table store_menu(
@@ -47,4 +48,12 @@ REFERENCES store(store_pk)
 create table franchise(
 franchise_pk number primary key,
 name varchar2(50) unique
+);
+
+create table img_file(
+img_pk number primary key,
+name varchar2(255),
+data blob,
+contenttype varchar2(30),
+in_time date
 );

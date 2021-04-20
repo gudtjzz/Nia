@@ -10,8 +10,8 @@
 <body>
 
 <div th:fragment="store-register-page" class="container">
-<form method="post" th:object="${store}" th:action="@{/store/register}">
-<input type="hidden" th:field="*{user_id}">
+<form enctype="multipart/form-data" method="post" th:object="${store}" th:action="@{/store/register}">
+<input type="hidden" th:field="*{userId}">
 <table>
 	<tr>
 		<td><label>점포명</label></td>
