@@ -21,50 +21,9 @@
 
 <body>
 
- <!-- Navigation -->
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-    <div class="container">
-      <a class="navbar-brand" href="/">여기저기거기</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarResponsive">
-        <ul class="navbar-nav ml-auto">
-          <li class="nav-item active">
-            <a class="nav-link" href="/">Home
-              <span class="sr-only">(current)</span>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/login">Login</a>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </nav>
-
-       <!-- 기본 가테고리  -->
-<div id="menu1"> 
-      <ul>
-	<li><a href="chicken">치킨</a></li>
-	<li><a href="pizza">피자</a></li>
-	<li><a href="middlefood">중식</a></li>
-	<li><a href="①">한식</a></li>
-	<li><a href="①">일식/돈까스</a></li>
-	<li><a href="①">족발/보쌈</a></li>
-	<li><a href="①">야식</a></li>
-	<li><a href="①">분식</a></li>
-	<li><a href="①">카페/디저트</a></li>
-	<style>
-ul{
-   list-style:none;
-   }
-</style>
-      </ul>
-</div>
-
   <!-- Page Content -->
-  <div class="container">
+	<div class="container" th:fragment="koreanfood_contents">
+  
     <!-- Page Features -->
     <div class="row text-center">
 
@@ -120,28 +79,13 @@ ul{
           </div>
           <div class="card-footer">
             <a href="#" class="btn btn-primary">  주    문  </a>
-          </div>
+                  </div>
         </div>
       </div>
 
     </div>
-    <!-- /.row -->
-
-  </div>
-  <!-- /.container -->
-
-  <!-- Footer -->
-  <footer class="py-5 bg-dark">
-    <div class="container">
-      <p class="m-0 text-center text-white">Copyright &copy; Your Website 2020</p>
-    </div>
-    <!-- /.container -->
-  </footer>
-
-  <!-- Bootstrap core JavaScript -->
-  <script src="vendor/jquery/jquery.min.js"></script>
-  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
+			
+		</div>
+	
 </body>
 
-</html>
