@@ -20,8 +20,10 @@ public class StoreService {
 	
 	@Transactional
 	public void register(Store store, ImgFile file) {
-		file = imgFileRepository.save(file);
-		store.setLogo_file(file);
+		if( file != null) {
+			file = imgFileRepository.save(file);
+			store.setLogo_file(file);
+		}
 		storeRepository.save(store);
 	}
 	

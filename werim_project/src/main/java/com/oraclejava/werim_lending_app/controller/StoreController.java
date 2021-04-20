@@ -89,19 +89,21 @@ public class StoreController {
 	
 	@PostMapping("/register")
 	public String register(Store store, MultipartFile file) {
-		
-		ImgFile file_info = new ImgFile();
-		
-		try {
-			file_info.setData(file.getBytes());
-		} catch (IOException e) {
-			e.printStackTrace();
+		if( !file.isEmpty() ) {
+			ImgFile file_info = new ImgFile();
+
+			try {
+				file_info.setData(file.getBytes());
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			file_info.setName(file.getOriginalFilename());
+			file_info.setIn_time(new Date());
+			file_info.setContentType(file.getContentType());
+			storeService.register(store, file_info);
 		}
-		file_info.setName(file.getOriginalFilename());
-		file_info.setIn_time(new Date());
-		file_info.setContentType(file.getContentType());
-		
-		storeService.register(store, file_info);
+		else
+			storeService.register(store, null);
 		
 		return "redirect:/store/store-list";
 	}
