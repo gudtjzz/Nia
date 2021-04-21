@@ -15,7 +15,7 @@
 	<nav class="navbar navbar-inverse navbar-fixed-top">
 		<div class="container-fluid">
 			<div class="navbar-header">
-				<a class="navbar-brand" href="/index">여기저기거기</a>
+				<a class="navbar-brand" href="/">여기저기거기</a>
 			</div>
 			<form method="POST" th:action="@{/logout}">
 				<button class="btn btn-link pull-right navbar-brand"
@@ -33,6 +33,9 @@
 					</li>
 					<li role="presentation">
 						<a th:href="@{'/user/userDelete'}">회원탈퇴</a>
+					</li>
+					<li role="presentation" sec:authorize-expr="hasRole('ROLE_ADMIN')">
+						<a th:href="@{'/user/userList'}">점포요청관리</a>
 					</li>
 				</ul>
 			</div>

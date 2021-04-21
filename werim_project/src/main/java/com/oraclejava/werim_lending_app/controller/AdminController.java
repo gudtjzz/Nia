@@ -19,6 +19,9 @@ public class AdminController {
 	public String getUserList(Model model) {
 		model.addAttribute("userList", userInfoRepository.findAll());
 		
+		model.addAttribute("contents", 
+				"admin/userList :: userList_contents");
+		
 		return "admin/userList";
 		
 	}

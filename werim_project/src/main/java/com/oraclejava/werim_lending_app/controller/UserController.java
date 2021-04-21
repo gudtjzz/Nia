@@ -26,16 +26,25 @@ public class UserController {
 	@Autowired
 	private UserInfoRepository userInfoRepository;
 	
-	//사용자목록(GET)
-		@GetMapping("/userList")
-		public String getUserList(Model model) {
-			model.addAttribute("userList", userInfoRepository.findAll());
-			
-			model.addAttribute("contents", 
-					"admin/userList :: userList_contents");
-			
-			return "admin/adminLayout";
-		}
+	
+	@GetMapping("/userList")
+	public String getUserList(Model model) {
+		model.addAttribute("userList", userInfoRepository.findByStoreState("1"));
+		
+		model.addAttribute("contents", 
+				"user/userList :: userList_contents");
+		
+		return "user/userLayout";
+		
+	}
+	@PostMapping(params = "update", value = "/userList")
+	public String userListup(@AuthenticationPrincipal CustomUser user, UserInfo userInfo) {
+		userInfoRepository.save(user.getUserinfo());
+		System.out.println(userInfo);
+		
+		return "redirect:/user/userLayout";
+		
+	}
 		@RequestMapping(value = "/userLayout", method = RequestMethod.GET)
 		public ModelAndView userLayout() {
 			ModelAndView mav = new ModelAndView();
