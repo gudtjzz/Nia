@@ -7,7 +7,7 @@ CREATE TABLE USER_INFO
    "ZONECODE" NUMBER, 
    "ADDRESS" VARCHAR2(256 BYTE), 
    "ADDRESS2" VARCHAR2(256 BYTE),
-    store_state varchar2(1) not null default 0
+    store_state varchar2(1) not null default '0'
 );
 
 CREATE TABLE USER_ROLE 
@@ -35,14 +35,30 @@ origin_info varchar2(255),
 img_pk number
 );
 
-create table store_menu(
+create table menu(
 menu_pk number primary key,
 store_pk number,
 name varchar2(50),
 price number,
-image_url varchar2(400),
-constraint fk_store_menu FOREIGN key(store_pk)
+image_url blob,
+constraint fk_menu FOREIGN key(store_pk)
 REFERENCES store(store_pk)
+);
+
+create table options(
+option_pk number primary key,
+store_pk number,
+name varchar2(50),
+price number,
+image blob,
+constraint fk_option foreign key(store_pk)
+references store(store_pk)
+);
+
+create table menu_option(
+menu_pk number,
+option_pk number,
+primary key (menu_pk, option_pk)
 );
 
 create table franchise(

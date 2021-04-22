@@ -21,12 +21,12 @@
 	</thead>
 	<tbody>
 		<tr th:each="store : ${store_list}" >
-			<td><a th:href="|/store/menu/${store.store_pk}|">
+			<td><a th:href="|/store/${store.store_pk}/menu/update|">
 			<img th:if="${store.logo_file != null}" width="100" height="100" th:src="|data:${store.logo_file.contentType};base64,${store.logo_file.base64}|">
 			<img th:if="${store.logo_file == null}" width="100" height="100" th:src="@{/images/none.png}">
 			</a></td>
-			<td><a th:href="|/store/menu/${store.store_pk}|"><span th:text="${store.name}"></span></a></td>
-			<td><form method="post" th:action="@{|/store/delete/${store.store_pk}|}"><button class="btn btn-danger" >삭제</button>
+			<td><a th:href="|/store/${store.store_pk}/menu/update|"><span th:text="${store.name}"></span></a></td>
+			<td><form method="post" th:action="@{|/store/${store.store_pk}/delete|}"><button class="btn btn-danger" >삭제</button>
 			</form>
 			</td>
 		</tr>
