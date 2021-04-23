@@ -49,3 +49,18 @@
 	margin: 0 auto;
 	overflow: hidden;
 }
+
+#demos .owl-carousel .item{
+	height: 55rem;
+	background: rgb(37, 191, 218);
+	padding: 1rem;
+	
+	margin-left: 20px;
+	margin-bottom	: 20px;
+	
+}
+
+#demos .d{
+	display: flex;
+	
+}

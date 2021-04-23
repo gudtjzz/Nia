@@ -20,67 +20,58 @@
 </head>
 
 <body>
-	<div class="container" th:fragment="japanesefood_contents">
-    <!-- Page Features -->
-    <div class="row text-center">
 
-      <div class="col-lg-3 col-md-6 mb-4">
-        <div class="card h-100">
-          <img class="card-img-top" src="/images/ggot.jpg" alt="" height="300">
-          <div class="card-body">
-            <h4 class="card-title">꽃초밥</h4>
-            <p class="card-text">꽃 초밥, 회덮밥으로 맛있고 유명한 곳!</p>
-          </div>
-          <div class="card-footer">
-            <a href="#" class="btn btn-primary">  주    문  </a>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-lg-3 col-md-6 mb-4">
-        <div class="card h-100">
-          <img class="card-img-top" src="/images/mugong.jpg" alt="" height="300">
-          <div class="card-body">
-            <h4 class="card-title">무공돈까스</h4>
-            <p class="card-text">가장 중요한맛, 매장 인테리어, 메뉴구성! 어느곳 하나 빈틈이 없는 치밀함!</p>
-          </div>
-          <div class="card-footer">
-            <a href="#" class="btn btn-primary">  주    문  </a>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-lg-3 col-md-6 mb-4">
-        <div class="card h-100">
-          <img class="card-img-top" src="/images/dong.jpg" alt="" height="300">
-          <div class="card-body">
-            <h4 class="card-title">용우동</h4>
-            <p class="card-text">20년 전통의 용우동, '우동' 하면 생각나는 기업 1위 용우동 입니다.
-            					항상 한결같은 그 맛 용우동!</p>
-          </div>
-          <div class="card-footer">
-            <a href="#" class="btn btn-primary">  주    문  </a>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-lg-3 col-md-6 mb-4">
-        <div class="card h-100">
-          <img class="card-img-top" src="/images/club.jpg" alt="" height="300">
-          <div class="card-body">
-            <h4 class="card-title">돈까스클럽</h4>
-            <p class="card-text">돈까스클럽은 돈까스를 비롯 화덕피자,스파게티 등 50개의 메뉴를 구성해
-            					고객에게 편리성과 합리성 다양성을 제공합니다. 언제든지 편안하게 찾는 업체 돈까스클럽.</p>
-          </div>
-          <div class="card-footer">
-            <a href="#" class="btn btn-primary">  주    문  </a>
-           </div>
-        </div>
-      </div>
-
-    </div>
-			
-		</div>
+  <!-- Page Content -->
+	<div  class="container" th:fragment="japanesefood_contents" >
 	
-</body>
+		<h1 align="center" >계란은 자고로 휜자는빼야.. 그외는 사문난적 -전국 규동연합-</h1>
+		<section id="demos" >
+		<div  class="row" >
+		<div class="large-12 columns" >
+		<div class="owl-carousel owl-theme d" >
 
+	<div class="item" th:each="food : ${Store}">
+			<img th:if="${food.logo_file != null}" width="200" height="200" th:src="|data:${food.logo_file.contentType};base64,${food.logo_file.base64}|">
+			<img th:if="${food.logo_file == null}" width="200" height="200" th:src="@{/images/none.png}">
+		<h4 align="center" th:text="${food.name}">1</h4>
+		
+		<div class="card-footer">
+            <a href="#" class="btn btn-primary">  주    문  </a>
+          </div>
+		</div>
+				
+		
+		</div>
+		</div>
+		</div>
+		</section>
+	
+		<script type="text/javascript">
+		
+		$(document).ready(function(){
+			//jquery 시작!
+			$('.owl-carousel').owlCarousel({
+				loop:true,
+				margin: 10,
+				nav:true,
+				responsive:{
+					0:{
+						items:1
+					},
+					600:{
+						items:3
+					},
+					1000:{
+						items:5
+					}
+				}
+			});
+		});
+		</script>
+		
+		
+		
+		</div>
+	</body>
+	
+	</html>

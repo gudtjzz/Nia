@@ -1,6 +1,9 @@
 package com.oraclejava.werim_lending_app.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -8,11 +11,21 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.oraclejava.werim_lending_app.CustomUser;
+import com.oraclejava.werim_lending_app.dao.ImgFileRepository;
+import com.oraclejava.werim_lending_app.dao.StoreRepository;
+import com.oraclejava.werim_lending_app.dto.Store;
 import com.oraclejava.werim_lending_app.dto.UserInfo;
+
 
 
 @Controller
 public class HomeController {
+	
+	@Autowired
+	private StoreRepository storeRepository;
+	
+	@Autowired
+	private ImgFileRepository imgFileRepository;
 	
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
@@ -28,11 +41,11 @@ public class HomeController {
 
 
 	
-	
 	@RequestMapping(value = "/chicken", method = RequestMethod.GET)
 	public ModelAndView chicken() {
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("contents",  "chicken :: chicken_contents");
+		mav.addObject("Store" , storeRepository.findByCategory("0"));
 		mav.setViewName("homeLayout");
 		return mav;
 	}
@@ -41,6 +54,8 @@ public class HomeController {
 	public ModelAndView pizza() {
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("contents",  "pizza :: pizza_contents");
+		mav.addObject("Store" , storeRepository.findByCategory("1"));
+		
 		mav.setViewName("homeLayout");
 		return mav;
 	}
@@ -49,6 +64,7 @@ public class HomeController {
 	public ModelAndView middlefood() {
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("contents",  "middlefood :: middlefood_contents");
+		mav.addObject("Store" , storeRepository.findByCategory("2"));
 		mav.setViewName("homeLayout");
 		return mav;
 	}
@@ -58,6 +74,7 @@ public class HomeController {
 	public ModelAndView koreanfood() {
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("contents",  "koreanfood :: koreanfood_contents");
+		mav.addObject("Store" , storeRepository.findByCategory("3"));
 		mav.setViewName("homeLayout");
 		return mav;
 	}
@@ -67,15 +84,17 @@ public class HomeController {
 	public ModelAndView japanesefood() {
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("contents",  "japanesefood :: japanesefood_contents");
+		mav.addObject("Store" , storeRepository.findByCategory("4"));
 		mav.setViewName("homeLayout");
 		return mav;
 	}
-	
+
 	
 	@RequestMapping(value = "/jokbo", method = RequestMethod.GET)
 	public ModelAndView jokbo() {
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("contents",  "jokbo :: jokbo_contents");
+		mav.addObject("Store" , storeRepository.findByCategory("5"));
 		mav.setViewName("homeLayout");
 		return mav;
 	}
@@ -85,6 +104,7 @@ public class HomeController {
 	public ModelAndView yasik() {
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("contents",  "yasik :: yasik_contents");
+		mav.addObject("Store" , storeRepository.findByCategory("6"));
 		mav.setViewName("homeLayout");
 		return mav;
 	}
@@ -93,6 +113,7 @@ public class HomeController {
 	public ModelAndView boonsik() {
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("contents",  "boonsik :: boonsik_contents");
+		mav.addObject("Store" , storeRepository.findByCategory("7"));
 		mav.setViewName("homeLayout");
 		return mav;
 	}
@@ -101,6 +122,7 @@ public class HomeController {
 	public ModelAndView cafe() {
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("contents",  "cafe :: cafe_contents");
+		mav.addObject("Store" , storeRepository.findByCategory("8"));
 		mav.setViewName("homeLayout");
 		return mav;
 	}

@@ -18,70 +18,59 @@
   <link href="css/cartegori2.css" rel="stylesheet" >
 
 </head>
+
 <body>
-
-  <!-- Page Content -->
-  <div class="container" th:fragment="middlefood_contents">
-
-    <!-- Page Features -->
-    <div class="row text-center">
-
-      <div class="col-lg-3 col-md-6 mb-4">
-        <div class="card h-100">
-          <img class="card-img-top" src="/images/hongkong.png" alt="" height="300">
-          <div class="card-body">
-            <h4 class="card-title">홍콩반점</h4>
-            <p class="card-text">백종원이 대표로 있는 (주)더본코리아의 한국식 중화 요리 프랜차이즈.</p>
-          </div>
-          <div class="card-footer">
-            <a href="#" class="btn btn-primary">  주    문  </a>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-lg-3 col-md-6 mb-4">
-        <div class="card h-100">
-          <img class="card-img-top" src="/images/manri.jpg" alt="" height="300">
-          <div class="card-body">
-            <h4 class="card-title">만리장성</h4>
-            <p class="card-text">'중국집' 하면 바로 떠오르는 그 곳. 전통과 역사가 살아 숨쉬는 베스트 맛집!
-          </div>
-          <div class="card-footer">
-            <a href="#" class="btn btn-primary">  주    문  </a>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-lg-3 col-md-6 mb-4">
-        <div class="card h-100">
-          <img class="card-img-top" src="/images/ibiga.jpg" alt="" height="300">
-          <div class="card-body">
-            <h4 class="card-title">이비가짬뽕</h4>
-            <p class="card-text">이비가짬봉은 직접 맛을 본 고객님들이 모두 인정하는 그 맛 하나로 성공했습니다.</p>
-            					<p>지금 바로 만나보세요!</p>
-          </div>
-          <div class="card-footer">
-            <a href="#" class="btn btn-primary">  주    문  </a>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-lg-3 col-md-6 mb-4">
-        <div class="card h-100">
-          <img class="card-img-top" src="/images/hong.png" alt="" height="300">
-          <div class="card-body">
-            <h4 class="card-title">홍짜장</h4>
-            <p class="card-text">홍짜장이라는 압도적인 브랜드 파워 14년의 명맥을 잇는 전통있는 브랜드</p>
-          </div>
-          <div class="card-footer">
-            <a href="#" class="btn btn-primary">  주    문  </a>
-            </div>
-        </div>
-      </div>
-
-    </div>
-			
-		</div>
+<!-- Page Content -->
+	<div  class="container" th:fragment="middlefood_contents" >
 	
-</body>
+		<h1 align="center">고르기애매할땐 역시 무난한 중식이 쵝오!</h1>
+		<section id="demos" >
+		<div  class="row" >
+		<div class="large-12 columns" >
+		<div class="owl-carousel owl-theme d" >
 
+	<div class="item" th:each="food : ${Store}">
+			<img th:if="${food.logo_file != null}" width="200" height="200" th:src="|data:${food.logo_file.contentType};base64,${food.logo_file.base64}|">
+			<img th:if="${food.logo_file == null}" width="200" height="200" th:src="@{/images/none.png}">
+		<h4 align="center" th:text="${food.name}">1</h4>
+		
+		<div class="card-footer">
+            <a href="#" class="btn btn-primary">  주    문  </a>
+          </div>
+		</div>
+				
+		
+		</div>
+		</div>
+		</div>
+		</section>
+	
+		<script type="text/javascript">
+		
+		$(document).ready(function(){
+			//jquery 시작!
+			$('.owl-carousel').owlCarousel({
+				loop:true,
+				margin: 10,
+				nav:true,
+				responsive:{
+					0:{
+						items:1
+					},
+					600:{
+						items:3
+					},
+					1000:{
+						items:5
+					}
+				}
+			});
+		});
+		</script>
+		
+		
+		
+		</div>
+	</body>
+	
+	</html>

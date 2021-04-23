@@ -22,66 +22,56 @@
 <body>
 
   <!-- Page Content -->
-	<div class="container" th:fragment="jokbo_contents">
-
-    <!-- Page Features -->
-    <div class="row text-center">
-
-      <div class="col-lg-3 col-md-6 mb-4">
-        <div class="card h-100">
-          <img class="card-img-top" src="/images/one.jpg" alt="" height="300">
-          <div class="card-body">
-            <h4 class="card-title">원할머니보쌈</h4>
-            <p class="card-text">맛있는 보쌈, 부드러운 족발, 명품도시락! 46년, 세대를 잇는 정성의 손맛</p>
-          </div>
-          <div class="card-footer">
-            <a href="#" class="btn btn-primary">  주    문  </a>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-lg-3 col-md-6 mb-4">
-        <div class="card h-100">
-          <img class="card-img-top" src="/images/jokbal.jpg" alt="" height="300">
-          <div class="card-body">
-            <h4 class="card-title">귀한족발</h4>
-            <p class="card-text">귀한스타일 귀한 사람들과 함께하는 귀한 시간. 귀하게 대접 받을 수 있는 공간을 선물합니다.</p>
-          </div>
-          <div class="card-footer">
-            <a href="#" class="btn btn-primary">  주    문  </a>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-lg-3 col-md-6 mb-4">
-        <div class="card h-100">
-          <img class="card-img-top" src="/images/kaljok.jpg" alt="" height="300">
-          <div class="card-body">
-            <h4 class="card-title">홍대칼국수와 족발</h4>
-            <p class="card-text">홍대본점 오픈부터 족발과 칼국수와의 콜라보레이션으로 시대를 앞서가고 트랜드에 맞춘 깔끔하고 다양한 메뉴와 소스제공!</p>
-          </div>
-          <div class="card-footer">
-            <a href="#" class="btn btn-primary">  주    문  </a>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-lg-3 col-md-6 mb-4">
-        <div class="card h-100">
-          <img class="card-img-top" src="/images/jungjok.jpg" alt="" height="300">
-          <div class="card-body">
-            <h4 class="card-title">正족발</h4>
-            <p class="card-text">원가율을 낮추어 타브랜드에 비해 값이 저렴하고 맛도 보장되는 정족발!</p>
-          </div>
-          <div class="card-footer">
-            <a href="#" class="btn btn-primary">  주    문  </a>
-         </div>
-        </div>
-      </div>
-
-    </div>
-			
-		</div>
+	<div  class="container" th:fragment="jokbo_contents" >
 	
-</body>
+		<h1 align="center" >막걸리를 삿는데 족발을 안사?</h1>
+		<section id="demos" >
+		<div  class="row" >
+		<div class="large-12 columns" >
+		<div class="owl-carousel owl-theme d" >
 
+	<div class="item" th:each="food : ${Store}">
+			<img th:if="${food.logo_file != null}" width="200" height="200" th:src="|data:${food.logo_file.contentType};base64,${food.logo_file.base64}|">
+			<img th:if="${food.logo_file == null}" width="200" height="200" th:src="@{/images/none.png}">
+		<h4 align="center" th:text="${food.name}">1</h4>
+		
+		<div class="card-footer">
+            <a href="#" class="btn btn-primary">  주    문  </a>
+          </div>
+		</div>
+				
+		
+		</div>
+		</div>
+		</div>
+		</section>
+	
+		<script type="text/javascript">
+		
+		$(document).ready(function(){
+			//jquery 시작!
+			$('.owl-carousel').owlCarousel({
+				loop:true,
+				margin: 10,
+				nav:true,
+				responsive:{
+					0:{
+						items:1
+					},
+					600:{
+						items:3
+					},
+					1000:{
+						items:5
+					}
+				}
+			});
+		});
+		</script>
+		
+		
+		
+		</div>
+	</body>
+	
+	</html>

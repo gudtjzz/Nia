@@ -21,69 +21,57 @@
 
 <body>
 
-  <!-- Page Content -->
-	<div class="container" th:fragment="boonsik_contents">
-
-
-    <!-- Page Features -->
-    <div class="row text-center">
-
-      <div class="col-lg-3 col-md-6 mb-4">
-        <div class="card h-100">
-          <img class="card-img-top" src="/images/dduk.jpg" alt="" height="300">
-          <div class="card-body">
-            <h4 class="card-title">엽기떡볶이</h4>
-            <p class="card-text">대한민국의 매운맛을 책임집니다.</p>
-          </div>
-          <div class="card-footer">
-            <a href="#" class="btn btn-primary">  주    문  </a>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-lg-3 col-md-6 mb-4">
-        <div class="card h-100">
-          <img class="card-img-top" src="/images/firedduk.jpg" alt="" height="300">
-          <div class="card-body">
-            <h4 class="card-title">불스떡볶이</h4>
-            <p class="card-text">떡볶이가 생각날때 불스떡볶이, 출출하고 배고플때 불스떡볶이</p>
-          </div>
-          <div class="card-footer">
-            <a href="#" class="btn btn-primary">  주    문  </a>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-lg-3 col-md-6 mb-4">
-        <div class="card h-100">
-          <img class="card-img-top" src="/images/chung.jpg" alt="" height="300">
-          <div class="card-body">
-            <h4 class="card-title">청년다방</h4>
-            <p class="card-text">커피와 프리미엄 떡볶이가 결합된 아날로그 감성의 명품 분식 전문점</p>
-          </div>
-          <div class="card-footer">
-            <a href="#" class="btn btn-primary">  주    문  </a>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-lg-3 col-md-6 mb-4">
-        <div class="card h-100">
-          <img class="card-img-top" src="/images/sinjeon.jpg" alt="" height="300">
-          <div class="card-body">
-            <h4 class="card-title">신전떡볶이</h4>
-            <p class="card-text">실제로 떡볶이 양념에 사용되는 녹색 청양고추를 모티브로 설정해 실질적이며 바르고 고급진 떡볶이업체입니다.</p>
-          </div>
-          <div class="card-footer">
-            <a href="#" class="btn btn-primary">  주    문  </a>
-                </div>
-        </div>
-      </div>
-
-    </div>
-			
-		</div>
+ <!-- Page Content -->
+	<div  class="container" th:fragment="boonsik_contents" >
 	
-</body>
+		<h1 align="center" >주모의 니코틴 쩔은 손맛의 떡볶이</h1>
+		<section id="demos" >
+		<div  class="row" >
+		<div class="large-12 columns" >
+		<div class="owl-carousel owl-theme d" >
 
-<body>
+	<div class="item" th:each="food : ${Store}">
+			<img th:if="${food.logo_file != null}" width="200" height="200" th:src="|data:${food.logo_file.contentType};base64,${food.logo_file.base64}|">
+			<img th:if="${food.logo_file == null}" width="200" height="200" th:src="@{/images/none.png}">
+		<h4 align="center" th:text="${food.name}">1</h4>
+		
+		<div class="card-footer">
+            <a href="#" class="btn btn-primary">  주    문  </a>
+          </div>
+		</div>
+				
+		
+		</div>
+		</div>
+		</div>
+		</section>
+	
+		<script type="text/javascript">
+		
+		$(document).ready(function(){
+			//jquery 시작!
+			$('.owl-carousel').owlCarousel({
+				loop:true,
+				margin: 10,
+				nav:true,
+				responsive:{
+					0:{
+						items:1
+					},
+					600:{
+						items:3
+					},
+					1000:{
+						items:5
+					}
+				}
+			});
+		});
+		</script>
+		
+		
+		
+		</div>
+	</body>
+	
+	</html>

@@ -21,68 +21,58 @@
 
 <body>
 
+  
   <!-- Page Content -->
-	<div class="container" th:fragment="yasik_contents">
-
-
-    <!-- Page Features -->
-    <div class="row text-center">
-
-      <div class="col-lg-3 col-md-6 mb-4">
-        <div class="card h-100">
-          <img class="card-img-top" src="/images/lotte.jpg" alt="" height="300">
-          <div class="card-body">
-            <h4 class="card-title">롯데리아</h4>
-            <p class="card-text">맛있는 즐거움이 찾아온다, 롯데리아에서 빠르고 편리하게 주문하세요.</p>
-          </div>
-          <div class="card-footer">
-            <a href="#" class="btn btn-primary">  주    문  </a>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-lg-3 col-md-6 mb-4">
-        <div class="card h-100">
-          <img class="card-img-top" src="/images/mac.jpg" alt="" height="300">
-          <div class="card-body">
-            <h4 class="card-title">맥도날드</h4>
-            <p class="card-text">1955년 작은 레스토랑에서부터 지금에 이르기까지 고객이 가장 좋아하는 장소이자,
-							     음식을 즐기는 최고의 방법이 되기 위해 맥도날드는 오늘도 노력합니다.</p>
-          </div>
-          <div class="card-footer">
-            <a href="#" class="btn btn-primary">  주    문  </a>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-lg-3 col-md-6 mb-4">
-        <div class="card h-100">
-          <img class="card-img-top" src="/images/halmae.jpg" alt="" height="300">
-          <div class="card-body">
-            <h4 class="card-title">홍콩할매불닭발</h4>
-            <p class="card-text">예상대로 맛있고, 예상보다 잘 된다! 확실한 닭발을 원할땐 홍콩할매붉닭발.</p>
-          </div>
-          <div class="card-footer">
-            <a href="#" class="btn btn-primary">  주    문  </a>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-lg-3 col-md-6 mb-4">
-        <div class="card h-100">
-          <img class="card-img-top" src="/images/firedak.png" alt="" height="300">
-          <div class="card-body">
-            <h4 class="card-title">오늘은불닭발</h4>
-            <p class="card-text">뼈있는/뼈없는, 국있는/국없는 소비자 맞춤 닭발 업체 오늘은불닭발.</p>
-          </div>
-          <div class="card-footer">
-            <a href="#" class="btn btn-primary">  주    문  </a>
-                  </div>
-        </div>
-      </div>
-
-    </div>
-			
-		</div>
+	<div  class="container" th:fragment="yasik_contents" >
 	
-</body>
+		<h1 align="center" >자고로 야식은 먹으라고 있는것이다</h1>
+		<section id="demos" >
+		<div  class="row" >
+		<div class="large-12 columns" >
+		<div class="owl-carousel owl-theme d" >
+
+	<div class="item" th:each="food : ${Store}">
+			<img th:if="${food.logo_file != null}" width="200" height="200" th:src="|data:${food.logo_file.contentType};base64,${food.logo_file.base64}|">
+			<img th:if="${food.logo_file == null}" width="200" height="200" th:src="@{/images/none.png}">
+		<h4 align="center" th:text="${food.name}">1</h4>
+		
+		<div class="card-footer">
+            <a href="#" class="btn btn-primary">  주    문  </a>
+          </div>
+		</div>
+				
+		
+		</div>
+		</div>
+		</div>
+		</section>
+	
+		<script type="text/javascript">
+		
+		$(document).ready(function(){
+			//jquery 시작!
+			$('.owl-carousel').owlCarousel({
+				loop:true,
+				margin: 10,
+				nav:true,
+				responsive:{
+					0:{
+						items:1
+					},
+					600:{
+						items:3
+					},
+					1000:{
+						items:5
+					}
+				}
+			});
+		});
+		</script>
+		
+		
+		
+		</div>
+	</body>
+	
+	</html>

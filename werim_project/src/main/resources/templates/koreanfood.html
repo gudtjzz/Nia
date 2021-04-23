@@ -22,70 +22,56 @@
 <body>
 
   <!-- Page Content -->
-	<div class="container" th:fragment="koreanfood_contents">
-  
-    <!-- Page Features -->
-    <div class="row text-center">
-
-      <div class="col-lg-3 col-md-6 mb-4">
-        <div class="card h-100">
-          <img class="card-img-top" src="/images/kingkong.png" alt="" height="300">
-          <div class="card-body">
-            <h4 class="card-title">킹콩부대찌개</h4>
-            <p class="card-text">한국인이면 누구나 좋아하는 메뉴, '배부름의 즐거움' 무한리필,
-						   전문적인 성공창업지원시스템이 자랑인 브랜드!</p>
-          </div>
-          <div class="card-footer">
-            <a href="#" class="btn btn-primary">  주    문  </a>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-lg-3 col-md-6 mb-4">
-        <div class="card h-100">
-          <img class="card-img-top" src="/images/thejingook.jpg" alt="" height="300">
-          <div class="card-body">
-            <h4 class="card-title">The 진국</h4>
-            <p class="card-text">편한 운영으로 삶의 여유를 누리며 매장을 운영하고, 수익성까지 보장돼 가맹점주님의 삶의 질을 높입니다.
-유망 창업 아이템의 3가지 조건인 운영 편의성, 수익성, 장기성을 모두 갖춘 브랜드 더진국입니다.</p>
-          </div>
-          <div class="card-footer">
-            <a href="#" class="btn btn-primary">  주    문  </a>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-lg-3 col-md-6 mb-4">
-        <div class="card h-100">
-          <img class="card-img-top" src="/images/leeteacher.jpg" alt="" height="300">
-          <div class="card-body">
-            <h4 class="card-title">이선생짜글이</h4>
-            <p class="card-text">10년의 정성과 고집 메뉴의 전문화와 맛에 집중했습니다.
-								대중적인 메뉴로 유행에 민감하지 않고, 불황을 타지 않는, 한국인의 영원한 소울푸드</p>
-          </div>
-          <div class="card-footer">
-            <a href="#" class="btn btn-primary">  주    문  </a>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-lg-3 col-md-6 mb-4">
-        <div class="card h-100">
-          <img class="card-img-top" src="/images/naggop.png" alt="" height="300">
-          <div class="card-body">
-            <h4 class="card-title">낙곱새부대장부대찌개</h4>
-            <p class="card-text">저희 부대장은 고객이 원하는 세상, 고객으로부터 언제나 사랑받는
-								 미래를 창조하는 기업인 토종브랜드입니다.</p>
-          </div>
-          <div class="card-footer">
-            <a href="#" class="btn btn-primary">  주    문  </a>
-                  </div>
-        </div>
-      </div>
-
-    </div>
-			
-		</div>
+	<div  class="container" th:fragment="koreanfood_contents" >
 	
-</body>
+		<h1 align="center" >마! 국밥 함 무바라! 즥인다!</h1>
+		<section id="demos" >
+		<div  class="row" >
+		<div class="large-12 columns" >
+		<div class="owl-carousel owl-theme d" >
 
+	<div class="item" th:each="food : ${Store}">
+			<img th:if="${food.logo_file != null}" width="200" height="200" th:src="|data:${food.logo_file.contentType};base64,${food.logo_file.base64}|">
+			<img th:if="${food.logo_file == null}" width="200" height="200" th:src="@{/images/none.png}">
+		<h4 align="center" th:text="${food.name}">1</h4>
+		
+		<div class="card-footer">
+            <a href="#" class="btn btn-primary">  주    문  </a>
+          </div>
+		</div>
+				
+		
+		</div>
+		</div>
+		</div>
+		</section>
+	
+		<script type="text/javascript">
+		
+		$(document).ready(function(){
+			//jquery 시작!
+			$('.owl-carousel').owlCarousel({
+				loop:true,
+				margin: 10,
+				nav:true,
+				responsive:{
+					0:{
+						items:1
+					},
+					600:{
+						items:3
+					},
+					1000:{
+						items:5
+					}
+				}
+			});
+		});
+		</script>
+		
+		
+		
+		</div>
+	</body>
+	
+	</html>
