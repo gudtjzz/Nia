@@ -1,13 +1,12 @@
 package com.oraclejava.werim_lending_app.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.oraclejava.werim_lending_app.CustomUser;
 import com.oraclejava.werim_lending_app.dto.UserInfo;
 
 
@@ -23,10 +22,6 @@ public class HomeController {
 		mav.addObject("contents",  null);
 		return mav;
 	}
-	
-	
-
-
 	
 	
 	@RequestMapping(value = "/chicken", method = RequestMethod.GET)

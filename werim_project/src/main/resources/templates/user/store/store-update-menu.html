@@ -5,40 +5,151 @@
 <title>요청</title>
 <script src="/jquery/jquery.min.js"></script>
 <link href="/bootstrap/css/bootstrap.css" rel="stylesheet">
+
 </head>
 <body>
 
 <div th:fragment="store-update-menu-page" class="container">
 <div class="row container-fluid">
-	<div class="col-xs-12 col-sm-9" >
+	<div class="col-xs-12 col-sm-9" id="category-container">
 		<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-			<div class="panel panel-default">
-				<div class="panel-heading" role="tab" id="headingOne">
-					<h4 class="panel-title">
-						<a data-toggle="collapse" href="#collapseOne"
-							aria-expanded="true" aria-controls="collapseOne">대분류1</a>
-					</h4>
-				</div>
-				<div id="collapseOne" class="panel-collapse collapse"
-					role="tabpanel" aria-labelledby="headingOne">
-					<div class="panel-body row">
-						<div class="col-xs-12">
-							<table style="width:100%;">
-								<tr>
-									<td>name</td>
-									<td class="text-right" rowspan="2"> <img style="width:auto;height:100%;" src="/images/club.jpg"></td>
-								</tr>
-								<tr>
-									<td>price</td>
-								</tr>
-							</table>
-						</div>
-					</div>
-				</div>
-			</div>
+		</div>
+
+		<div class="text-right">
+			<button class="btn" id="add-category">+</button>
 		</div>
 	</div> 	<div class="col-xs-12 col-sm-3" style="height:100px;background: lime;"></div>
 </div>
+
+<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">메뉴 추가</div>
+      <div class="modal-body container-fluid">
+        <form id="modal-form row">
+          <div class="col-xs-6">
+          <label style="width:100%">메뉴이름</label>
+          <input style="width:100%" type="text" id="modal-menu">
+          </div>
+          <div class="col-xs-6">
+          <label style="width:100%">가격</label>
+          <input style="width:100%" type="text" id="modal-price">
+          </div>
+          <div class="col-xs-12">
+          <img id="modal-img" width="100px" height="100px">
+          <input type="file" id="modal-file">
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+      <button class="btn" onclick="modal_OK()">확인</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+var items_json_result = { category : [] };
+var accordion = $('#accordion');
+var accordion_count = 0;
+var last_tr;
+console.log(items_json_result);
+////  카테고리 추가 +버튼 클릭
+$('#add-category').on('click', function(){
+	var name = prompt('카테고리의 이름을 지정해주세요');
+	if(name != '' && name != null){
+		accordion_count++;
+		var $panel = $('<div class="panel panel-default" id="' + name + '">' +
+				'<div class="panel-heading" role="tab" id="heading'+ accordion_count + '">' +
+					'<h3 class="panel-title container-fluid">' +
+						'<a style="float:left;" data-toggle="collapse" data-parent="#accordion" href="#collapse'+ accordion_count + '"' +
+							'aria-expanded="true" aria-controls="collapse'+ accordion_count + '">' + name + '</a>' +
+					'<button style="float:right;" class="btn btn-danger" onclick="deleteCategory($(this).parents(\'.panel\'))">삭제</button>' +
+					'</h3>' +
+				'</div>' +
+				'<div id="collapse'+ accordion_count + '" class="panel-collapse collapse"' +
+					'role="tabpanel" aria-labelledby="heading'+ accordion_count + '">' +
+					'<div class="panel-body">' +
+						'<table class="table">' +
+						'<tr>' + '<td>' +
+							'<button style="float:right;" class="btn" data-toggle="modal" data-target=".modal"' +
+							'onclick="javascript:last_tr=$(this).parents(\'tr\')">+</button>' +
+						'</td>' + '</tr>' +
+						'</table>' +
+					'</div>' +
+				'</div>' +
+			'</div>');
+			
+		items_json_result.category.push({name: name, items: []});
+		accordion.append($panel);
+	}
+});
+
+//// 모달 그림 보여주기
+var reader = new FileReader();
+
+reader.onload = function(event){
+$('#modal-img').attr('src', event.target.result);
+};
+
+$('#modal-file').on('change',function(result){
+	if(result != null)
+		reader.readAsDataURL(result.target.files[0]);
+});
+////////////////////////////
+
+function deleteCategory(panel){
+	var id = panel.attr('id');
+	items_json_result.category.forEach(function(item,index){
+		if(item.name == id){
+			delete items_json_result.category[index];
+			items_json_result.category.sort();
+			items_json_result.category.pop();
+			panel.remove();
+		}
+	});
+}
+
+function modal_OK(){
+	var modal = $('.modal');
+	var modal_img = modal.find('#modal-img');
+	var modal_menu = modal.find('#modal-menu');
+	var modal_price = modal.find('#modal-price');
+
+	if( modal_img.attr('src') == null)
+		modal_img.attr('src','');
+		
+	var $div = $('<tr><td>' +
+					'<table style="width:100%">' + 
+					'<tr>' +
+					'<td>' + modal_menu.val() + '</td>' +
+					'<td rowspan="2">' + 
+					'<button style="float:right;" class="btn btn-danger" onclick="javascript:$(this).parents(\'tr\').parents(\'tr\').remove();">메뉴삭제</button>' +
+					'<img src="' + modal_img.attr('src') + '" style="width:100px;height:100px;float:right;">' + 
+					'</td>' + 
+					'</tr>' +
+					'<tr>' +
+					'<td class="price">' + modal_price.val() + '</td>' +
+					'<td></td>' + 
+					'</tr>' +
+					'</table>' + 
+					'</td></tr>');
+	
+	$(last_tr).before($div);
+	
+	items_json_result.category.forEach(function(item){
+		if( $(item).parents(item.name) != null ){
+			item.items.push({	name : modal_menu.val(),
+								price :modal_price.val(),
+								img : modal_img.attr('src') });
+			return;
+		}
+	});
+	modal.modal('hide');
+}
+</script>
+
+
 </div>
 </body>
 </html>

@@ -41,6 +41,7 @@ store_pk number,
 name varchar2(50),
 price number,
 image_url blob,
+category varchar2(20),
 constraint fk_menu FOREIGN key(store_pk)
 REFERENCES store(store_pk)
 );
