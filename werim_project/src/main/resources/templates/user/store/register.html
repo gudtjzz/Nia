@@ -31,8 +31,9 @@
 				$('#img').attr('src', event.target.result);
 			};
 
-		$('#file').on('change',function(result){			
-			reader.readAsDataURL(result.target.files[0]);
+		$('#file').on('change',function(result){
+			if(result != null)
+				reader.readAsDataURL(result.target.files[0]);
 		});
 		</script>
 		</td>

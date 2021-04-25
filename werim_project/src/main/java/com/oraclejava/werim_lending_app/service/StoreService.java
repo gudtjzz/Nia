@@ -18,6 +18,9 @@ public class StoreService {
 	@Autowired
 	private ImgFileRepository imgFileRepository;
 	
+	public Store findById(int store_pk) {
+		return storeRepository.findById(store_pk).get();
+	}
 	@Transactional
 	public void register(Store store, ImgFile file) {
 		if( file != null) {
@@ -31,9 +34,12 @@ public class StoreService {
 		return storeRepository.findAllByUserId(user_id);
 	}
 	
+	@Transactional
 	public void delete(int store_pk) {
 		Store store = storeRepository.findById(store_pk).get();
 		storeRepository.deleteById(store_pk);
-		imgFileRepository.deleteById(store.getLogo_file().getImg_pk());
+		if( store.getLogo_file() != null && 
+			imgFileRepository.existsById(store.getLogo_file().getImg_pk()))
+			imgFileRepository.deleteById(store.getLogo_file().getImg_pk());
 	}
 }

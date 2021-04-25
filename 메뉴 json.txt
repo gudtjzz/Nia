@@ -1,0 +1,15 @@
+JSON
+{category : [ {name : '대분류1',
+	     itmes : [ { name : '메뉴1',
+		      price : 10000,
+		      option : [12,13,14],
+		      img : base64_id },
+		    { name : '메뉴2',
+		      price : 2000,
+		      option : [20,21],
+		      img : base64_id }
+		   ],
+	     options : [ { name : 123, price : 123, img : base64, id : temp },
+		       { name : 12, price : 123, img : base64, id : temp } ]
+	   ]
+}

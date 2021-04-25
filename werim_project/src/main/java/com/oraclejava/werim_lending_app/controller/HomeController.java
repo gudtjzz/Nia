@@ -1,19 +1,27 @@
 package com.oraclejava.werim_lending_app.controller;
 
+<<<<<<< HEAD
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+=======
+>>>>>>> origin/joesunik
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+<<<<<<< HEAD
 import com.oraclejava.werim_lending_app.CustomUser;
 import com.oraclejava.werim_lending_app.dao.ImgFileRepository;
 import com.oraclejava.werim_lending_app.dao.StoreRepository;
 import com.oraclejava.werim_lending_app.dto.Store;
+=======
+>>>>>>> origin/joesunik
 import com.oraclejava.werim_lending_app.dto.UserInfo;
 
 
@@ -38,9 +46,12 @@ public class HomeController {
 	}
 	
 	
+<<<<<<< HEAD
 
 
 	
+=======
+>>>>>>> origin/joesunik
 	@RequestMapping(value = "/chicken", method = RequestMethod.GET)
 	public ModelAndView chicken() {
 		ModelAndView mav = new ModelAndView();
