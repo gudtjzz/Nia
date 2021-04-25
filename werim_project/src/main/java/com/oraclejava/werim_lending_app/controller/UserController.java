@@ -53,7 +53,17 @@ public class UserController {
 		mav.addObject("userInfo",userInfo);
 		return mav;
 	}
-
+	
+	@RequestMapping(value = "/userpwUpdate", method = RequestMethod.GET)
+	public ModelAndView userpwUpdate(@AuthenticationPrincipal CustomUser user) {
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("contents",  "user/userpwUpdate :: userpwUpdate_contents");
+		UserInfo userInfo = userInfoRepository.findByUsername(user.getUserinfo().getUsername());
+		mav.setViewName("user/userLayout");
+		mav.addObject("userInfo",userInfo);
+		return mav;
+	}
+	
 	@RequestMapping(params ="update", value="/userUpdate", method=RequestMethod.POST)
 	public String userUpdate2(UserInfo user,@AuthenticationPrincipal CustomUser user2) {
 		user.setPassword(encoder.encode(user.getPassword()));
