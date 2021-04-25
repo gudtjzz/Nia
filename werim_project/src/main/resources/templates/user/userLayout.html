@@ -39,6 +39,9 @@
 					<li role="presentation">
 						<a th:href="@{'/user/userDelete'}">회원탈퇴</a>
 					</li>
+					<li role="presentation" sec:authorize-expr="hasRole('ROLE_ADMIN')">
+						<a th:href="@{'/user/userList'}">점포요청관리</a>
+					</li>
 				</ul>
 			</div>
 		</div>

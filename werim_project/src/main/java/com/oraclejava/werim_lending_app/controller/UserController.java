@@ -1,5 +1,7 @@
 package com.oraclejava.werim_lending_app.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,8 +11,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.oraclejava.werim_lending_app.CustomUser;
@@ -24,11 +28,34 @@ import ch.qos.logback.core.encoder.Encoder;
 public class UserController {
 	
 	@Autowired
-	private UserInfoRepository userInfoRepository;
-	
-	@Autowired
 	private BCryptPasswordEncoder encoder;
 	
+	@Autowired
+	private UserInfoRepository userInfoRepository;
+	
+	@GetMapping("/userList")
+	public String getUserList(Model model) {
+		model.addAttribute("userList", userInfoRepository.findByStoreState("1"));
+		
+		model.addAttribute("contents", 
+				"user/userList :: userList_contents");
+		
+		return "user/userLayout";
+		
+	}
+	@PostMapping(params = "update", value = "/userList")
+	public String userListup(@AuthenticationPrincipal CustomUser user, @RequestParam("user_id") List<Integer> user_id) {
+
+	    userInfoRepository.findAllById(user_id);
+		 List<UserInfo> user_list = (List<UserInfo>)userInfoRepository.findAllById(user_id);
+	      user_list.forEach(userinfo -> ((UserInfo) userinfo).setStoreState("2"));
+	      userInfoRepository.saveAll(user_list);
+		
+		return "redirect:/user/userLayout";
+		
+	}
+
+
 		@RequestMapping(value = "/userLayout", method = RequestMethod.GET)
 		public ModelAndView userLayout() {
 			ModelAndView mav = new ModelAndView();

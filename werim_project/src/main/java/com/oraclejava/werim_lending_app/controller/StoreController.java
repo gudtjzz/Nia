@@ -48,7 +48,7 @@ public class StoreController {
 	public String requestStore(@AuthenticationPrincipal CustomUser user) {
 		System.out.println("post");
 		UserInfo userinfo = user.getUserinfo();
-		userinfo.setStore_state("1");
+		userinfo.setStoreState("1");
 		
 		userinfoRepository.save(userinfo);
 		
