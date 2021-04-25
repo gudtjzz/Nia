@@ -29,7 +29,11 @@
 			<div class="col-sm-2 sidebar">
 				<ul class="nav nav-pills nav-stacked">
 					<li role="presentation">
-						<a th:href="@{'/userUpdate'}">내정보수정</a>
+						<a th:href="@{'/user/userUpdate'}">내정보수정</a>
+					</li>
+					<li>
+						<a th:if="${#authentication.principal.userinfo.store_state != '2'}" th:href="@{/store/request}">점포</a>
+						<a th:if="${#authentication.principal.userinfo.store_state == '2'}" th:href="@{/store/store-list}">점포</a>
 					</li>
 					<li role="presentation">
 						<a th:href="@{'/user/userDelete'}">회원탈퇴</a>

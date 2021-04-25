@@ -6,12 +6,10 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,13 +21,17 @@ import com.oraclejava.werim_lending_app.CustomUser;
 import com.oraclejava.werim_lending_app.dao.UserInfoRepository;
 import com.oraclejava.werim_lending_app.dto.UserInfo;
 
+import ch.qos.logback.core.encoder.Encoder;
+
 @Controller
 @RequestMapping("/user")
 public class UserController {
 	
 	@Autowired
-	private UserInfoRepository userInfoRepository;
+	private BCryptPasswordEncoder encoder;
 	
+	@Autowired
+	private UserInfoRepository userInfoRepository;
 	
 	@GetMapping("/userList")
 	public String getUserList(Model model) {
@@ -52,7 +54,8 @@ public class UserController {
 		return "redirect:/user/userLayout";
 		
 	}
-   
+
+
 		@RequestMapping(value = "/userLayout", method = RequestMethod.GET)
 		public ModelAndView userLayout() {
 			ModelAndView mav = new ModelAndView();
@@ -64,42 +67,24 @@ public class UserController {
 		}
 		
 		@RequestMapping(value = "/userUpdate", method = RequestMethod.GET)
-		public ModelAndView userUpdate() {
+		public ModelAndView userUpdate(@AuthenticationPrincipal CustomUser user) {
 			ModelAndView mav = new ModelAndView();
-			mav.setViewName("userUpdate");
+			mav.addObject("contents",  "user/userUpdate :: userUpdate_contents");
+			UserInfo userInfo = userInfoRepository.findByUsername(user.getUserinfo().getUsername());
+			mav.setViewName("user/userLayout");
+			mav.addObject("userInfo",userInfo);
 			return mav;
 		}
 		
-		//사용자수정(GET)
-		@GetMapping("/userUpdate/{user_id}")
-		public String getUser(@PathVariable Integer user_id, Model model) {
-			UserInfo userInfo = userInfoRepository.findById(user_id).get();
-			userInfo.setPassword(userInfo.getPassword().substring(6));
-			model.addAttribute("userInfo", userInfo);
-			
-			model.addAttribute("contents", 
-					"admin/userUpdate :: userUpdate_contents");
-			
-			return "admin/adminLayout";
+		@RequestMapping(params ="update", value="/userUpdate", method=RequestMethod.POST)
+		public String userUpdate2(UserInfo user,@AuthenticationPrincipal CustomUser user2) {
+			user.setPassword(encoder.encode(user.getPassword()));
+			user.setUser_id(user2.getUserinfo().getUser_id());
+			user2.setUserinfo(user);
+			userInfoRepository.save(user);
+			return "redirect:/user/userLayout";
 		}
-		
-		@PostMapping(params = "update", value = "/userUpdate")
-		public String userUpdate(@Validated UserInfo userInfo, 
-				BindingResult bindingResult,
-				Model model) {
-			
-			if (bindingResult.hasErrors()) {
-				model.addAttribute("contents", 
-						"admin/userUpdate :: userUpdate_contents");
-				
-				return "admin/adminLayout";
-			}
-			userInfo.setPassword("{noop}" + userInfo.getPassword());
-			userInfoRepository.save(userInfo);
-			
-			return "redirect:/admin/userList";
-			
-		}
+	
 		@GetMapping("/userDelete")
 		public String getUserd(Model model) {
 			
