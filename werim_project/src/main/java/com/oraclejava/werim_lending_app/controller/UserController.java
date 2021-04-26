@@ -29,35 +29,10 @@ import ch.qos.logback.core.encoder.Encoder;
 public class UserController {
 
 	@Autowired
-<<<<<<< HEAD
 	private UserInfoRepository userInfoRepository;
 
 	@Autowired
 	private BCryptPasswordEncoder encoder;
-
-
-
-
-
-	@RequestMapping(value = "/userLayout", method = RequestMethod.GET)
-	public ModelAndView userLayout() {
-		ModelAndView mav = new ModelAndView();
-		mav.setViewName("user/userLayout");
-
-		mav.addObject("contents", 
-				null);
-		return mav;
-	}
-
-	@RequestMapping(value = "/userUpdate", method = RequestMethod.GET)
-	public ModelAndView userUpdate(@AuthenticationPrincipal CustomUser user) {
-		ModelAndView mav = new ModelAndView();
-		mav.addObject("contents",  "user/userUpdate :: userUpdate_contents");
-		UserInfo userInfo = userInfoRepository.findByUsername(user.getUserinfo().getUsername());
-		mav.setViewName("user/userLayout");
-		mav.addObject("userInfo",userInfo);
-		return mav;
-	}
 	
 	@RequestMapping(value = "/userpwUpdate", method = RequestMethod.GET)
 	public ModelAndView userpwUpdate(@AuthenticationPrincipal CustomUser user) {
@@ -68,11 +43,6 @@ public class UserController {
 		mav.addObject("userInfo",userInfo);
 		return mav;
 	}
-=======
-	private BCryptPasswordEncoder encoder;
-	
-	@Autowired
-	private UserInfoRepository userInfoRepository;
 	
 	@GetMapping("/userList")
 	public String getUserList(Model model) {
@@ -117,15 +87,6 @@ public class UserController {
 			return mav;
 		}
 		
-		@RequestMapping(params ="update", value="/userUpdate", method=RequestMethod.POST)
-		public String userUpdate2(UserInfo user,@AuthenticationPrincipal CustomUser user2) {
-			user.setPassword(encoder.encode(user.getPassword()));
-			user.setUser_id(user2.getUserinfo().getUser_id());
-			user2.setUserinfo(user);
-			userInfoRepository.save(user);
-			return "redirect:/user/userLayout";
-		}
->>>>>>> origin/werim
 	
 	@RequestMapping(params ="update", value="/userUpdate", method=RequestMethod.POST)
 	public String userUpdate2(UserInfo user,@AuthenticationPrincipal CustomUser user2) {

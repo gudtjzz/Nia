@@ -14,24 +14,6 @@ import com.oraclejava.werim_lending_app.dto.UserInfo;
 @Controller
 public class HomeController {
 	
-<<<<<<< HEAD
-=======
-	
->>>>>>> origin/werim
-	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public ModelAndView homeLayout() {
-		ModelAndView mav = new ModelAndView();
-		mav.setViewName("index");
-		mav.addObject("contents",  "index :: index_contents");
-		mav.addObject("contents",  null);
-		return mav;
-	}
-	
-	
-
-
-	
-	
 	@RequestMapping(value = "/chicken", method = RequestMethod.GET)
 	public ModelAndView chicken() {
 		ModelAndView mav = new ModelAndView();
