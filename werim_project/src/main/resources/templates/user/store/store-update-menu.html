@@ -54,10 +54,16 @@ var accordion = $('#accordion');
 var accordion_count = 0;
 var last_tr;
 console.log(items_json_result);
+
 ////  카테고리 추가 +버튼 클릭
 $('#add-category').on('click', function(){
 	var name = prompt('카테고리의 이름을 지정해주세요');
 	if(name != '' && name != null){
+		if(existJsonEqualName(items_json_result.category, name)){
+			alert('중복');
+			return;
+		}
+		
 		accordion_count++;
 		var $panel = $('<div class="panel panel-default" id="' + name + '">' +
 				'<div class="panel-heading" role="tab" id="heading'+ accordion_count + '">' +
@@ -146,6 +152,16 @@ function modal_OK(){
 		}
 	});
 	modal.modal('hide');
+}
+
+function existJsonEqualName(arr, tag){
+	var found = false;
+	
+	arr.forEach(function(e){
+		if( e.name == tag) found = true;
+	});
+	
+	return found;
 }
 </script>
 
