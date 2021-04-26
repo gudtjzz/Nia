@@ -37,6 +37,9 @@
 						<a th:if="${#authentication.principal.userinfo.store_state == '2'}" th:href="@{/store/store-list}">점포</a>
 					</li>
 					<li role="presentation">
+						<a th:href="@{'/user/userpwUpdate'}">비밀번호변경</a>
+					</li>
+					<li role="presentation">
 						<a th:href="@{'/user/userDelete'}">회원탈퇴</a>
 					</li>
 					<li role="presentation" sec:authorize-expr="hasRole('ROLE_ADMIN')">

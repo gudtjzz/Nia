@@ -12,13 +12,12 @@ import com.oraclejava.werim_lending_app.dao.StoreRepository;
 
 @Controller
 public class HomeController {
-	
+
 	@Autowired
 	private StoreRepository storeRepository;
 	
 	@Autowired
 	private ImgFileRepository imgFileRepository;
-	
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public ModelAndView homeLayout() {

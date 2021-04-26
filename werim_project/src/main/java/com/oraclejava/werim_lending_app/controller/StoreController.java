@@ -71,6 +71,10 @@ public class StoreController {
 	}
 	
 	@GetMapping("/register")
+	public String register() {
+		return "/store/register";
+	}
+
 	public ModelAndView register(ModelAndView mav, @AuthenticationPrincipal CustomUser user) {
 		UserInfo userinfo = user.getUserinfo();
 		
@@ -115,7 +119,6 @@ public class StoreController {
 		
 		return "redirect:/store/store-list";
 	}
-	
 	@GetMapping("/{store_pk}/menu/update")
 	public String updateMenu(Model model, @PathVariable("store_pk") int store_pk) {
 		model.addAttribute("contents", "/user/store/store-update-menu :: store-update-menu-page");
