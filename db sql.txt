@@ -73,3 +73,11 @@ data blob,
 content_type varchar2(30),
 in_time date
 );
+
+create SEQUENCE user_info_seq;
+create sequence user_role_seq;
+create sequence store_seq;
+create sequence menu_seq;
+create sequence option_seq;
+create sequence franchise_seq;
+create sequence img_file_seq;
