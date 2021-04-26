@@ -10,12 +10,21 @@
 <body>
 
 <div th:fragment="store-register-page" class="container">
+<<<<<<< HEAD
 <<<<<<< HEAD:werim_project/src/main/resources/templates/store/register.html
 <form th:action="@{/store/register}">
 =======
 <form enctype="multipart/form-data" method="post" th:object="${store}" th:action="@{/store/register}">
 <input type="hidden" th:field="*{userId}">
 >>>>>>> cd06f1af3060e54876c7cb4f46fad9730948fbfa:werim_project/src/main/resources/templates/user/store/register.html
+=======
+<<<<<<<< HEAD:werim_project/src/main/resources/templates/user/store/register.html
+<form enctype="multipart/form-data" method="post" th:object="${store}" th:action="@{/store/register}">
+<input type="hidden" th:field="*{userId}">
+========
+<form th:action="@{/store/register}">
+>>>>>>>> origin/werim:werim_project/src/main/resources/templates/store/register.html
+>>>>>>> origin/werim
 <table>
 	<tr>
 		<td><label>점포명</label></td>

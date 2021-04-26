@@ -57,7 +57,7 @@ public class UserInfo {
 	private String address2;
 	
 	@Column
-	private String store_state = "0";
+	private String storeState = "0";
 	
 	@OneToMany(mappedBy = "userInfo", cascade = CascadeType.ALL)
 	private Set<UserRole> userRoles;

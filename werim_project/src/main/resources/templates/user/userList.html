@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th = "http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8"/>
+<title>리스트</title>
+</head>
+<body>
+<div th:fragment="userList_contents">
+		<div class="container">
+<h1>사용자 목록</h1>
+<form method="post" th:action="@{/user/userList}">
+<table class="table table-hover">
+		<thead>
+			<tr>
+				<td>사용자ID</td>
+				<td>E-mail</td>
+				<td>점포사용여부</td>
+			</tr>
+		</thead>
+		<tbody th:each="p : ${userList}">
+			<tr>
+			<td th:text="${p.username}">admin</td>
+			<td th:text="${p.mail_address}">kwr@naver.com</td>
+			<td>
+			<input type="checkbox" th:value="${p.user_id}" name="user_id"/></td>
+			</tr>
+		</tbody>
+	</table>
+	<button class="btn btn-danger btn-lg" type="submit" name="update">수정</button>	
+	</form>
+	</div>
+	</div>
+	</body>
+</html>
+

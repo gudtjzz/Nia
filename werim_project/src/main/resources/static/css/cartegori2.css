@@ -5,13 +5,16 @@
 
 #menu1{
 	background: rgb(192, 192, 192);
-}
-
-#menu1 ul{
-	width: auto;
+	width:  100%;
 	margin: 0 auto;
 	overflow: hidden;
 }
+
+.navbar{
+	margin-bottom: 0px;
+}
+
+
 
 #menu1 ul li{
 	float: left;
@@ -30,4 +33,19 @@
 #menu1 ul li a:hover{
 	background: #138535;
 	color: #fff;
+}
+
+.sidebar{
+	position: fixed;
+	display: block;
+	top: 50px;
+	bottom: 0;
+	display: flex;
+	background-color: rgb(28, 165, 247);
+}
+
+.sidebar ul{
+	width: auto;
+	margin: 0 auto;
+	overflow: hidden;
 }
