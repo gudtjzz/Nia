@@ -20,9 +20,13 @@ CREATE TABLE USER_ROLE
 
 create table store(
 store_pk number primary key,
+user_id number,
+owner_name varchar2(100),
+business_number varchar2(20),
 name varchar2(100),
 address varchar2(255),
 category varchar2(20),
+franchise number,
 avg_delivery_time number,
 min_price number,
 oper_time varchar2(20),

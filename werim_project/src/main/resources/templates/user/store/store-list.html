@@ -9,7 +9,7 @@
 <body>
 
 <div th:fragment="store-list-page" class="container">
-<div th:if="${#authentication.principal.userinfo.store_state == '2'}" class="row">
+<div th:if="${#authentication.principal.userinfo.storeState == '2'}" class="row">
 <table border="1" class="table table-hover">
 	<caption class="text-right"><button class="btn btn-success" onclick="javascript:location.href='/store/register'">점포 추가</button></caption>
 	<thead>

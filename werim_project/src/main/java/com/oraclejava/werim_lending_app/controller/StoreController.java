@@ -65,16 +65,10 @@ public class StoreController {
 		List<Store> store_list = (List<Store>)storeService.findAllByUserId(userinfo.getUser_id());
 		mav.addObject("store_list",store_list);
 		
-		//mav.addObject("test",));
-		
 		return mav;
 	}
 	
 	@GetMapping("/register")
-	public String register() {
-		return "/store/register";
-	}
-
 	public ModelAndView register(ModelAndView mav, @AuthenticationPrincipal CustomUser user) {
 		UserInfo userinfo = user.getUserinfo();
 		

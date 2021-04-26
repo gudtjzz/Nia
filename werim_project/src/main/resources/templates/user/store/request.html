@@ -9,14 +9,14 @@
 <body>
 
 <div th:fragment="store-request-page" class="container">
-<div th:if="${#authentication.principal.userinfo.store_state == '0'}">
+<div th:if="${#authentication.principal.userinfo.storeState == '0'}">
 <form id="form" th:action="@{/store/request}" method="post" >
 	<span>업체회원으로 전환 신청하기!</span>
 	<input type="hidden" th:value="${#authentication.principal.userinfo.user_id}" name="username">
 	<input type="submit" value="신청">
 </form>	
 </div>
-<div th:if="${#authentication.principal.userinfo.store_state == '1'}">
+<div th:if="${#authentication.principal.userinfo.storeState == '1'}">
 	<span>업체회원 신청완료 현재 관리자의 승인을 대기중입니다!</span>
 </div>
 </div>
