@@ -9,6 +9,8 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,6 +32,7 @@ public class UserController {
 	@Autowired
 	private BCryptPasswordEncoder encoder;
 
+	
 	@RequestMapping(value = "/userLayout", method = RequestMethod.GET)
 	public ModelAndView userLayout() {
 		ModelAndView mav = new ModelAndView();
@@ -63,7 +66,7 @@ public class UserController {
 	@PostMapping(params = "update", value = "/userList")
 	public String userListup(@AuthenticationPrincipal CustomUser user, @RequestParam("user_id") List<Integer> user_id) {
 
-	    userInfoRepository.findAllById(user_id);
+	     userInfoRepository.findAllById(user_id);
 		 List<UserInfo> user_list = (List<UserInfo>)userInfoRepository.findAllById(user_id);
 	      user_list.forEach(userinfo -> ((UserInfo) userinfo).setStoreState("2"));
 	      userInfoRepository.saveAll(user_list);
@@ -82,6 +85,22 @@ public class UserController {
 		return mav;
 	}
 	
+	@RequestMapping(params="update", value="/userpwUpdate", method=RequestMethod.POST)
+	public String userpwUpdate(UserInfo user,@AuthenticationPrincipal CustomUser user3) {
+		String password2 = user.getPassword2();
+		String password3 = user.getPassword3();
+		
+		if(password2.equals(password3)) {
+			UserInfo userInfo = userInfoRepository.findByUsername(user3.getUserinfo().getUsername());
+			userInfo.setPassword(encoder.encode(user.getPassword2()));
+			userInfoRepository.save(userInfo);
+			return "redirect:/user/userLayout";
+		}else {
+			return "redirect:/user/userpwUpdate";
+		}
+		
+		
+	}
 	
 	@RequestMapping(params ="update", value="/userUpdate", method=RequestMethod.POST)
 	public String userUpdate2(UserInfo user,@AuthenticationPrincipal CustomUser user2) {

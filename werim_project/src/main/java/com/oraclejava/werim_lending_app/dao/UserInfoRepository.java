@@ -9,5 +9,5 @@ public interface UserInfoRepository extends CrudRepository<UserInfo, Integer> {
 	UserInfo findByUsername(String username);
 	
 	public Iterable<UserInfo> findByStoreState(String storeState);
-
+	
 }

@@ -34,7 +34,7 @@ public class UserInfo {
 	private int user_id;
 	
 	@Length(min = 5, message = "아이디는 5자 이상 입력하세요")
-	@NotEmpty(message = "아이디를 입력하세요")
+	//@NotEmpty(message = "아이디를 입력하세요")
 	private String username;
 	
 	@Length(min = 5, message = "패스워드는 5자 이상 입력하세요")
@@ -44,8 +44,11 @@ public class UserInfo {
 	@Transient
 	private String password2;
 	
+	@Transient
+	private String password3;
+	
 	@Email(message = "이메일 형식이 올바르지 않습니다")
-	@NotEmpty(message = "이메일을 입력하세요")
+	//@NotEmpty(message = "이메일을 입력하세요")
 	private String mail_address;
 	
 	private String tel;
