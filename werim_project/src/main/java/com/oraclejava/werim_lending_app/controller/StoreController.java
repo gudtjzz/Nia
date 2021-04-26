@@ -33,45 +33,48 @@ public class StoreController {
 
 	@Autowired
 	private FranchiseRepository franchiseRepository;
-	
+
 	@Autowired
 	private StoreService storeService;
-	
+
+
 	@GetMapping("/request")
 	public ModelAndView requestStore(ModelAndView mav) {
 		mav.setViewName("/user/userLayout");
 		mav.addObject("contents", "/user/store/request :: store-request-page");
 		return mav;
 	}
-	
+
 	@PostMapping("/request")
 	public String requestStore(@AuthenticationPrincipal CustomUser user) {
 		System.out.println("post");
 		UserInfo userinfo = user.getUserinfo();
 		userinfo.setStoreState("1");
-		
+
 		userinfoRepository.save(userinfo);
-		
+
 		return "redirect:/store/request";
 	}
-	
+
 	@GetMapping("/store-list")
 	public ModelAndView storeList(@AuthenticationPrincipal CustomUser user) {
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("/user/userLayout");
 		mav.addObject("contents","/user/store/store-list :: store-list-page");
-		
+
 		UserInfo userinfo = user.getUserinfo();
 		List<Store> store_list = (List<Store>)storeService.findAllByUserId(userinfo.getUser_id());
 		mav.addObject("store_list",store_list);
-		
+
+		//mav.addObject("test",));
+
 		return mav;
 	}
-	
+
 	@GetMapping("/register")
 	public ModelAndView register(ModelAndView mav, @AuthenticationPrincipal CustomUser user) {
 		UserInfo userinfo = user.getUserinfo();
-		
+
 		if( !mav.getModelMap().containsAttribute("store")) {
 			Store store = new Store();
 			store.setUserId(userinfo.getUser_id());
@@ -82,10 +85,10 @@ public class StoreController {
 		mav.addObject("userinfo", user.getUserinfo());
 		mav.addObject("contents", "/user/store/register :: store-register-page");
 		mav.setViewName("/user/userLayout");
-		
+
 		return mav;
 	}
-	
+
 	@PostMapping("/register")
 	public String register(Store store, MultipartFile file) {
 		if( !file.isEmpty() ) {
@@ -103,21 +106,21 @@ public class StoreController {
 		}
 		else
 			storeService.register(store, null);
-		
+
 		return "redirect:/store/store-list";
 	}
-	
-	@PostMapping("/{store_pk}/delete")
+
+	@PostMapping("/delete/{store_pk}")
 	public String delete(@PathVariable int store_pk) {
 		storeService.delete(store_pk);
-		
+
 		return "redirect:/store/store-list";
 	}
 	@GetMapping("/{store_pk}/menu/update")
 	public String updateMenu(Model model, @PathVariable("store_pk") int store_pk) {
 		model.addAttribute("contents", "/user/store/store-update-menu :: store-update-menu-page");
 		model.addAttribute("store", storeService.findById(store_pk));
-		
+
 		return "/user/userLayout";
 	}
 }
