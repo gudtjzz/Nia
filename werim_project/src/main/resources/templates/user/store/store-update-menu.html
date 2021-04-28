@@ -36,8 +36,8 @@
           <input style="width:100%" type="text" id="modal-price">
           </div>
           <div class="col-xs-12">
-          <img id="modal-img" width="100px" height="100px">
-          <input type="file" id="modal-file">
+          <img width="100px" height="100px" id="modal-img">
+          <input type="file" accept="image/png, image/jpeg, image/jpg, image/gif" id="modal-file">
           </div>
         </form>
       </div>
@@ -51,42 +51,39 @@
 <script>
 var items_json_result = { category : [] };
 var accordion = $('#accordion');
-var accordion_count = 0;
-var last_tr;
-console.log(items_json_result);
+var count = 0;
+var selected;
 
 ////  카테고리 추가 +버튼 클릭
 $('#add-category').on('click', function(){
 	var name = prompt('카테고리의 이름을 지정해주세요');
 	if(name != '' && name != null){
-		if(existJsonEqualName(items_json_result.category, name)){
+		if(existSameCategory(name)){
 			alert('중복');
 			return;
 		}
-		
-		accordion_count++;
-		var $panel = $('<div class="panel panel-default" id="' + name + '">' +
-				'<div class="panel-heading" role="tab" id="heading'+ accordion_count + '">' +
+		count++;
+		var $panel = $('<div class="panel panel-default">' +
+				'<div class="panel-heading" role="tab" id="heading' + count + '">' +
 					'<h3 class="panel-title container-fluid">' +
-						'<a style="float:left;" data-toggle="collapse" data-parent="#accordion" href="#collapse'+ accordion_count + '"' +
-							'aria-expanded="true" aria-controls="collapse'+ accordion_count + '">' + name + '</a>' +
+						'<a style="float:left;" data-toggle="collapse" data-parent="#accordion" href="#collapse' + count + '"' +
+							'aria-expanded="true" aria-controls="collapse' + count + '">' + name + '</a>' +
 					'<button style="float:right;" class="btn btn-danger" onclick="deleteCategory($(this).parents(\'.panel\'))">삭제</button>' +
 					'</h3>' +
 				'</div>' +
-				'<div id="collapse'+ accordion_count + '" class="panel-collapse collapse"' +
-					'role="tabpanel" aria-labelledby="heading'+ accordion_count + '">' +
+				'<div id="collapse' + count + '" class="panel-collapse collapse"' +
+					'role="tabpanel" aria-labelledby="heading' + count + '">' +
 					'<div class="panel-body">' +
-						'<table class="table">' +
-						'<tr>' + '<td>' +
+						'<ul class="list-unstyled">' +
+						'<li>' +
 							'<button style="float:right;" class="btn" data-toggle="modal" data-target=".modal"' +
-							'onclick="javascript:last_tr=$(this).parents(\'tr\')">+</button>' +
-						'</td>' + '</tr>' +
-						'</table>' +
+							'onclick="javascript:selected=$(this).parents(\'li\');">+</button>' +
+						'</li>' +
+						'</ul>' +
 					'</div>' +
 				'</div>' +
 			'</div>');
 			
-		items_json_result.category.push({name: name, items: []});
 		accordion.append($panel);
 	}
 });
@@ -105,15 +102,9 @@ $('#modal-file').on('change',function(result){
 ////////////////////////////
 
 function deleteCategory(panel){
-	var id = panel.attr('id');
-	items_json_result.category.forEach(function(item,index){
-		if(item.name == id){
-			delete items_json_result.category[index];
-			items_json_result.category.sort();
-			items_json_result.category.pop();
-			panel.remove();
-		}
-	});
+	var result = confirm('정말 삭제합니까?');
+	if(result)
+		$(panel).remove();
 }
 
 function modal_OK(){
@@ -121,16 +112,22 @@ function modal_OK(){
 	var modal_img = modal.find('#modal-img');
 	var modal_menu = modal.find('#modal-menu');
 	var modal_price = modal.find('#modal-price');
+	var modal_file = modal.find('#modal-file');
 
 	if( modal_img.attr('src') == null)
 		modal_img.attr('src','');
 		
-	var $div = $('<tr><td>' +
+	var $div = $('<li>' +
+					'<form><input type="hidden" name="id">' +
+					'<input type="hidden" name="name" value="' + modal_menu.val() + '" >' +
+					'<input type="hidden" name="price" value="' + modal_price.val() +'">' +
+					'<img style="display:none;" name="img" src="' + modal_img.attr('src') + '">' +
+					'</form>' +
 					'<table style="width:100%">' + 
 					'<tr>' +
 					'<td>' + modal_menu.val() + '</td>' +
 					'<td rowspan="2">' + 
-					'<button style="float:right;" class="btn btn-danger" onclick="javascript:$(this).parents(\'tr\').parents(\'tr\').remove();">메뉴삭제</button>' +
+					'<button style="float:right;" class="btn btn-danger" onclick="javascript:$(this).parents(\'li\').remove();">메뉴삭제</button>' +
 					'<img src="' + modal_img.attr('src') + '" style="width:100px;height:100px;float:right;">' + 
 					'</td>' + 
 					'</tr>' +
@@ -139,26 +136,23 @@ function modal_OK(){
 					'<td></td>' + 
 					'</tr>' +
 					'</table>' + 
-					'</td></tr>');
+					'</li>');
 	
-	$(last_tr).before($div);
+	$(selected).before($div);
 	
-	items_json_result.category.forEach(function(item){
-		if( $(item).parents(item.name) != null ){
-			item.items.push({	name : modal_menu.val(),
-								price :modal_price.val(),
-								img : modal_img.attr('src') });
-			return;
-		}
-	});
 	modal.modal('hide');
+	modal_img.attr('src','');
+	modal_menu.text('');
+	modal_price.val('');
+	
 }
 
-function existJsonEqualName(arr, tag){
+function existSameCategory(name){
 	var found = false;
 	
-	arr.forEach(function(e){
-		if( e.name == tag) found = true;
+	$('.panel-heading').each(function(index, element){
+		if( $(element).find('a').text() == name )
+			found = true;
 	});
 	
 	return found;
