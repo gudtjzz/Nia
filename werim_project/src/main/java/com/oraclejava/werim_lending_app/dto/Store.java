@@ -8,6 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 
 import lombok.Data;
 
@@ -15,6 +16,7 @@ import lombok.Data;
 @Entity
 @SequenceGenerator(allocationSize = 1, name = "store_seq_gen",
 sequenceName = "store_seq")
+@Table(name="store")
 public class Store {
 
 	@Id

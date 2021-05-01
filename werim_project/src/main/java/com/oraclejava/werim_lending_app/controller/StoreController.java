@@ -3,15 +3,20 @@ package com.oraclejava.werim_lending_app.controller;
 import java.io.IOException;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.json.JacksonJsonParser;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -122,5 +127,14 @@ public class StoreController {
 		model.addAttribute("store", storeService.findById(store_pk));
 
 		return "/user/userLayout";
+	}
+	
+	@ResponseBody
+	@PutMapping("/{id}/menu")
+	public String updateStoreMenu(@PathVariable String id, @RequestBody String data_json) {
+		System.out.println(data_json);
+		storeService.registerNUpdateMenu(data_json);
+		System.out.println("result");
+		return "ok";
 	}
 }
