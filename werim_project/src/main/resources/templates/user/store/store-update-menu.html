@@ -90,75 +90,94 @@ $('#add-category').on('click', function(){
 			alert('중복');
 			return;
 		}
+		add_category(name,true);
+	}	
+});
+
+function add_category(name, develop){
+	
 		count++;
-		var $panel = $('<div class="panel panel-default">' +
+		var panel = '<div class="panel panel-default">' +
 				'<div class="panel-heading" role="tab" id="heading' + count + '">' +
 					'<h3 class="panel-title container-fluid">' +
 						'<a style="float:left;" data-toggle="collapse" data-parent="#accordion" href="#collapse' + count + '"' +
-							'aria-expanded="true" aria-controls="collapse' + count + '">' + name + '</a>' +
-					'<button style="float:right;" class="btn btn-danger" onclick="deleteCategory($(this).parents(\'.panel\'))">삭제</button>' +
+							'aria-expanded="true" aria-controls="collapse' + count + '">' + name + '</a>';
+					if(develop == true)
+						panel += '<button style="float:right;" class="btn btn-danger" onclick="deleteCategory($(this).parents(\'.panel\'))">삭제</button>';
+						
+					panel +=
 					'</h3>' +
 				'</div>' +
 				'<div id="collapse' + count + '" class="panel-collapse collapse"' +
 					'role="tabpanel" aria-labelledby="heading' + count + '">' +
 					'<div class="panel-body">' +
 						'<ul class="list-unstyled">' +
-						'<li>' +
-							'<button style="float:right;" class="btn" data-toggle="modal" data-target="#modal-category"' +
-							'onclick="javascript:selected=$(this).parents(\'li\');">+</button>' +
+						'<li>';
+						
+						if(develop == true){
+							panel += '<button style="float:right;" class="btn" data-toggle="modal" data-target="#modal-category"' +
+							'onclick="javascript:selected=$(this).parents(\'li\');">+</button>';
+						}
+							panel +=
 						'</li>' +
 						'</ul>' +
 					'</div>' +
 				'</div>' +
-			'</div>');
+			'</div>';
 			
-		accordion.append($panel);
-	}
-});
+		accordion.append(panel);
+}
 
-//// 옵션 추가 + 버튼 클릭
+//// 옵션 모달 확인 클릭
 function modal_option_OK(){
 	var modal = $('#modal-option');
 	var modal_menu = modal.find('#modal-menu');
 	var modal_price = modal.find('#modal-price');
-	var modal_file = modal.find('#modal-file');
+	
+	add_option('',modal_menu.val(), modal_price.val(), true);
+	
+	modal.modal('hide');
+	modal_menu.val('');
+	modal_price.val('');
+}
 
-	if( modal_menu.val() == '' || modal_price.val() == ''){
+function add_option(id, modal_menu, modal_price, develop){
+	
+	if( modal_menu == '' || modal_price == ''){
 		alert('빈칸이 있습니다.');
 		return;
 	}
 	
 	var ul = $('#option-ul');
 	
-	if( ul.children('li').find('form>input[value="' + modal_menu.val() + '"]').length != 0){
+	if( ul.children('li').find('form>input[value="' + modal_menu + '"]').length != 0){
 		alert('옵션 이름 중복!!');
 		return;
 	}
 	
-	var $li = '<li>' + 
-				'<form><input type="hidden" name="id">' +
-				'<input type="hidden" name="name" value="' + modal_menu.val() + '" >' +
-				'<input type="hidden" name="price" value="' + modal_price.val() +'">' +
+	var li = '<li>' + 
+				'<form><input type="hidden" name="id" value="' + id + '">' +
+				'<input type="hidden" name="name" value="' + modal_menu + '" >' +
+				'<input type="hidden" name="price" value="' + modal_price +'">' +
 				'</form>' +
 				'<table style="width:100%">' + 
 				'<tr>' +
-				'<td>' + modal_menu.val() + '</td>' +
-				'<td rowspan="2">' + 
-				'<button style="float:right;" class="btn btn-danger" onclick="javascript:$(this).parents(\'li\').remove();">삭제</button>' +
+				'<td>' + modal_menu + '</td>' +
+				'<td rowspan="2">';
+				if( develop == true) 
+					li += '<button style="float:right;" class="btn btn-danger" onclick="javascript:$(this).parents(\'li\').remove();">삭제</button>';
+					
+				li +=
 				'</td>' + 
 				'</tr>' +
 				'<tr>' +
-				'<td class="price">' + modal_price.val() + '</td>' +
+				'<td class="price">' + modal_price + '</td>' +
 				'<td></td>' + 
 				'</tr>' +
 				'</table>' + 
 				'</li>';
 				
-	ul.append($li);
-
-	modal.modal('hide');
-	modal_menu.val('');
-	modal_price.val('');
+	ul.append(li);
 };
 
 //// 모달 그림 보여주기
@@ -187,41 +206,55 @@ function modal_category_OK(){
 	var modal_price = modal.find('#modal-price');
 	var modal_file = modal.find('#modal-file');
 
-	if( modal_menu.val() == '' || modal_price.val() == ''){
-		alert('빈칸이 있습니다.');
-		return;
-	}
-	if( modal_img.attr('src') == null)
-		modal_img.attr('src','/images/none.png');
-		
-	var $div = $('<li>' +
-					'<form><input type="hidden" name="id">' +
-					'<input type="hidden" name="name" value="' + modal_menu.val() + '" >' +
-					'<input type="hidden" name="price" value="' + modal_price.val() +'">' +
-					'<input type="hidden" name="img" value="' + modal_img.attr('src') + '">' +
-					'</form>' +
-					'<table style="width:100%">' + 
-					'<tr>' +
-					'<td>' + modal_menu.val() + '</td>' +
-					'<td rowspan="2">' + 
-					'<button style="float:right;" class="btn btn-danger" onclick="javascript:$(this).parents(\'li\').remove();">메뉴삭제</button>' +
-					'<img src="' + modal_img.attr('src') + '" style="width:100px;height:100px;float:right;">' + 
-					'</td>' + 
-					'</tr>' +
-					'<tr>' +
-					'<td class="price">' + modal_price.val() + '</td>' +
-					'<td></td>' + 
-					'</tr>' +
-					'</table>' + 
-					'</li>');
-	
-	$(selected).before($div);
+	add_menu('', modal_img.attr('src'), modal_menu.val(), modal_price.val(),null, true);
 	
 	modal.modal('hide');
 	modal_img.attr('src','');
 	modal_menu.val('');
 	modal_price.val('');
 	
+}
+function add_menu(id, modal_img, modal_menu, modal_price, category, develop){
+	
+	if( modal_menu == '' || modal_price == ''){
+		alert('빈칸이 있습니다.');
+		return;
+	}
+	if( modal_img == null || modal_img == '')
+		modal_img = '/images/none.png';
+		
+	var div = '<li>' +
+					'<form><input type="hidden" name="id" value="' + id + '">' +
+					'<input type="hidden" name="name" value="' + modal_menu + '" >' +
+					'<input type="hidden" name="price" value="' + modal_price +'">' +
+					'<input type="hidden" name="img" value="' + modal_img + '">' +
+					'</form>' +
+					'<table style="width:100%">' + 
+					'<tr>' +
+					'<td>' + modal_menu + '</td>' +
+					'<td rowspan="2">';
+					if( develop == true) 
+						div += '<button style="float:right;" class="btn btn-danger" onclick="javascript:$(this).parents(\'li\').remove();">메뉴삭제</button>';
+						
+					div +=
+					'<img src="' + modal_img + '" style="width:100px;height:100px;float:right;">' + 
+					'</td>' + 
+					'</tr>' +
+					'<tr>' +
+					'<td class="price">' + modal_price + '</td>' +
+					'<td></td>' + 
+					'</tr>' +
+					'</table>' + 
+					'</li>';
+	
+	if(category != null){
+		$('a[href^="#collapse"]').each(function(index,a){
+			if(a.innerText == category)
+				$(a).parents('.panel').find('ul').children('li').last().before(div);
+		});
+	}
+	else
+		$(selected).before(div);
 }
 
 function existSameCategory(name){
@@ -283,6 +316,7 @@ function update(){
             },
 			 success : function(result){
 				if(result == 'ok'){
+					alert('수정이 완료되었습니다');
 					location.replace('/store/store-list');
 				}
 			 }
@@ -290,11 +324,39 @@ function update(){
 }
 
 </script>
+<div th:if="${menu_optionJSON != null}">
+<script th:inline="javascript">
 
+function loadMenuOptions(develop){
+	var loadStringJSON = [[${menu_optionJSON}]];
+	var loadJSON = JSON.parse(loadStringJSON);
+	
+	console.log(loadJSON);
+	if(develop == true){
+		loadJSON.categories.forEach(element =>{
+			add_category(element.name,true);
+			
+			element.items.forEach(item => {
+				add_menu(item.id, item.img, item.name, item.price, element.name, true);
+			});// foreach
+		
+		loadJSON.options.forEach(element => {
+			add_option(element.id, element.name, element.price, true);			
+		}); // foreach
+		}); // foreach
+	}else{
+		
+	}
+}
+
+loadMenuOptions(true);
+</script>
+</div>
 <form th:action="@{/}" id="hidden_data" method="put">
 <input type="hidden" id="_csrf_header" name="_csrf_header" th:content="${_csrf.headerName}"/>
-<input type="hidden" name="id" th:value="${#authentication.principal.userinfo.user_id}" >
+<input type="hidden" name="id" th:value="${store.store_pk}" >
 </form>
+
 </div>
 </body>
 </html>

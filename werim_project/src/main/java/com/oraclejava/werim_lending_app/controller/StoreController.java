@@ -3,10 +3,9 @@ package com.oraclejava.werim_lending_app.controller;
 import java.io.IOException;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
+import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.json.JacksonJsonParser;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -125,16 +124,16 @@ public class StoreController {
 	public String updateMenu(Model model, @PathVariable("store_pk") int store_pk) {
 		model.addAttribute("contents", "/user/store/store-update-menu :: store-update-menu-page");
 		model.addAttribute("store", storeService.findById(store_pk));
-
+		model.addAttribute("menu_optionJSON", storeService.getMenuOptionJSON(store_pk));
+		
 		return "/user/userLayout";
 	}
 	
 	@ResponseBody
 	@PutMapping("/{id}/menu")
 	public String updateStoreMenu(@PathVariable String id, @RequestBody String data_json) {
-		System.out.println(data_json);
-		storeService.registerNUpdateMenu(data_json);
-		System.out.println("result");
+		storeService.registerNUpdateMenu(data_json, Integer.parseInt(id) );
+
 		return "ok";
 	}
 }

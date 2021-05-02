@@ -2,24 +2,26 @@ package com.oraclejava.werim_lending_app.dto;
 
 import java.util.Date;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import org.apache.tomcat.util.codec.binary.Base64;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 @Entity
 @Table(name = "img_file")
-@Data
+@Setter
+@Getter
+@ToString
 @SequenceGenerator(allocationSize = 1, name = "img_file_seq_gen",
 sequenceName = "img_file_seq")
 public class ImgFile {
