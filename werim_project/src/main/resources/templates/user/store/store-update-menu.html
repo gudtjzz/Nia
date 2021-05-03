@@ -16,12 +16,19 @@
 		</div>
 
 		<div class="text-right">
-			<button class="btn" id="add-category">+</button>
+			<button class="btn" id="add-category">+</button><br>
+			<button class="btn btn-primary" onclick="update()">등록</button>
 		</div>
-	</div> 	<div class="col-xs-12 col-sm-3" style="height:100px;background: lime;"></div>
+	</div> 	<div class="col-xs-12 col-sm-3" style="height:100px;background: lime;">
+ 		<div class="text-right">
+ 			<ul class="list-unstyled" id="option-ul">
+ 			</ul>
+			<button class="btn" data-toggle="modal" data-target="#modal-option">+</button><br>
+		</div>
+ 	</div>
 </div>
 
-<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+<div id="modal-category" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">메뉴 추가</div>
@@ -33,57 +40,145 @@
           </div>
           <div class="col-xs-6">
           <label style="width:100%">가격</label>
-          <input style="width:100%" type="text" id="modal-price">
+          <input style="width:100%" type="number" id="modal-price">
           </div>
           <div class="col-xs-12">
-          <img id="modal-img" width="100px" height="100px">
-          <input type="file" id="modal-file">
+          <img width="100px" height="100px" id="modal-img">
+          <input type="file" accept="image/png, image/jpeg, image/jpg, image/gif" id="modal-file">
           </div>
         </form>
       </div>
       <div class="modal-footer">
-      <button class="btn" onclick="modal_OK()">확인</button>
+      <button class="btn" onclick="modal_category_OK()">확인</button>
       </div>
     </div>
   </div>
 </div>
-
+<div id="modal-option" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">옵션 추가</div>
+      <div class="modal-body container-fluid">
+        <form id="modal-form row">
+          <div class="col-xs-6">
+          <label style="width:100%">이름</label>
+          <input style="width:100%" type="text" id="modal-menu">
+          </div>
+          <div class="col-xs-6">
+          <label style="width:100%">가격</label>
+          <input style="width:100%" type="number" id="modal-price">
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+      <button class="btn" onclick="modal_option_OK()">확인</button>
+      </div>
+    </div>
+  </div>
+</div>
 <script>
 var items_json_result = { category : [] };
 var accordion = $('#accordion');
-var accordion_count = 0;
-var last_tr;
-console.log(items_json_result);
+var count = 0;
+var selected;
+
 ////  카테고리 추가 +버튼 클릭
 $('#add-category').on('click', function(){
 	var name = prompt('카테고리의 이름을 지정해주세요');
 	if(name != '' && name != null){
-		accordion_count++;
-		var $panel = $('<div class="panel panel-default" id="' + name + '">' +
-				'<div class="panel-heading" role="tab" id="heading'+ accordion_count + '">' +
+		if(existSameCategory(name)){
+			alert('중복');
+			return;
+		}
+		add_category(name,true);
+	}	
+});
+
+function add_category(name, develop){
+	
+		count++;
+		var panel = '<div class="panel panel-default">' +
+				'<div class="panel-heading" role="tab" id="heading' + count + '">' +
 					'<h3 class="panel-title container-fluid">' +
-						'<a style="float:left;" data-toggle="collapse" data-parent="#accordion" href="#collapse'+ accordion_count + '"' +
-							'aria-expanded="true" aria-controls="collapse'+ accordion_count + '">' + name + '</a>' +
-					'<button style="float:right;" class="btn btn-danger" onclick="deleteCategory($(this).parents(\'.panel\'))">삭제</button>' +
+						'<a style="float:left;" data-toggle="collapse" data-parent="#accordion" href="#collapse' + count + '"' +
+							'aria-expanded="true" aria-controls="collapse' + count + '">' + name + '</a>';
+					if(develop == true)
+						panel += '<button style="float:right;" class="btn btn-danger" onclick="deleteCategory($(this).parents(\'.panel\'))">삭제</button>';
+						
+					panel +=
 					'</h3>' +
 				'</div>' +
-				'<div id="collapse'+ accordion_count + '" class="panel-collapse collapse"' +
-					'role="tabpanel" aria-labelledby="heading'+ accordion_count + '">' +
+				'<div id="collapse' + count + '" class="panel-collapse collapse"' +
+					'role="tabpanel" aria-labelledby="heading' + count + '">' +
 					'<div class="panel-body">' +
-						'<table class="table">' +
-						'<tr>' + '<td>' +
-							'<button style="float:right;" class="btn" data-toggle="modal" data-target=".modal"' +
-							'onclick="javascript:last_tr=$(this).parents(\'tr\')">+</button>' +
-						'</td>' + '</tr>' +
-						'</table>' +
+						'<ul class="list-unstyled">' +
+						'<li>';
+						
+						if(develop == true){
+							panel += '<button style="float:right;" class="btn" data-toggle="modal" data-target="#modal-category"' +
+							'onclick="javascript:selected=$(this).parents(\'li\');">+</button>';
+						}
+							panel +=
+						'</li>' +
+						'</ul>' +
 					'</div>' +
 				'</div>' +
-			'</div>');
+			'</div>';
 			
-		items_json_result.category.push({name: name, items: []});
-		accordion.append($panel);
+		accordion.append(panel);
+}
+
+//// 옵션 모달 확인 클릭
+function modal_option_OK(){
+	var modal = $('#modal-option');
+	var modal_menu = modal.find('#modal-menu');
+	var modal_price = modal.find('#modal-price');
+	
+	add_option('',modal_menu.val(), modal_price.val(), true);
+	
+	modal.modal('hide');
+	modal_menu.val('');
+	modal_price.val('');
+}
+
+function add_option(id, modal_menu, modal_price, develop){
+	
+	if( modal_menu == '' || modal_price == ''){
+		alert('빈칸이 있습니다.');
+		return;
 	}
-});
+	
+	var ul = $('#option-ul');
+	
+	if( ul.children('li').find('form>input[value="' + modal_menu + '"]').length != 0){
+		alert('옵션 이름 중복!!');
+		return;
+	}
+	
+	var li = '<li>' + 
+				'<form><input type="hidden" name="id" value="' + id + '">' +
+				'<input type="hidden" name="name" value="' + modal_menu + '" >' +
+				'<input type="hidden" name="price" value="' + modal_price +'">' +
+				'</form>' +
+				'<table style="width:100%">' + 
+				'<tr>' +
+				'<td>' + modal_menu + '</td>' +
+				'<td rowspan="2">';
+				if( develop == true) 
+					li += '<button style="float:right;" class="btn btn-danger" onclick="javascript:$(this).parents(\'li\').remove();">삭제</button>';
+					
+				li +=
+				'</td>' + 
+				'</tr>' +
+				'<tr>' +
+				'<td class="price">' + modal_price + '</td>' +
+				'<td></td>' + 
+				'</tr>' +
+				'</table>' + 
+				'</li>';
+				
+	ul.append(li);
+};
 
 //// 모달 그림 보여주기
 var reader = new FileReader();
@@ -99,56 +194,168 @@ $('#modal-file').on('change',function(result){
 ////////////////////////////
 
 function deleteCategory(panel){
-	var id = panel.attr('id');
-	items_json_result.category.forEach(function(item,index){
-		if(item.name == id){
-			delete items_json_result.category[index];
-			items_json_result.category.sort();
-			items_json_result.category.pop();
-			panel.remove();
-		}
-	});
+	var result = confirm('정말 삭제합니까?');
+	if(result)
+		$(panel).remove();
 }
 
-function modal_OK(){
-	var modal = $('.modal');
+function modal_category_OK(){
+	var modal = $('#modal-category');
 	var modal_img = modal.find('#modal-img');
 	var modal_menu = modal.find('#modal-menu');
 	var modal_price = modal.find('#modal-price');
+	var modal_file = modal.find('#modal-file');
 
-	if( modal_img.attr('src') == null)
-		modal_img.attr('src','');
+	add_menu('', modal_img.attr('src'), modal_menu.val(), modal_price.val(),null, true);
+	
+	modal.modal('hide');
+	modal_img.attr('src','');
+	modal_menu.val('');
+	modal_price.val('');
+	
+}
+function add_menu(id, modal_img, modal_menu, modal_price, category, develop){
+	
+	if( modal_menu == '' || modal_price == ''){
+		alert('빈칸이 있습니다.');
+		return;
+	}
+	if( modal_img == null || modal_img == '')
+		modal_img = '/images/none.png';
 		
-	var $div = $('<tr><td>' +
+	var div = '<li>' +
+					'<form><input type="hidden" name="id" value="' + id + '">' +
+					'<input type="hidden" name="name" value="' + modal_menu + '" >' +
+					'<input type="hidden" name="price" value="' + modal_price +'">' +
+					'<input type="hidden" name="img" value="' + modal_img + '">' +
+					'</form>' +
 					'<table style="width:100%">' + 
 					'<tr>' +
-					'<td>' + modal_menu.val() + '</td>' +
-					'<td rowspan="2">' + 
-					'<button style="float:right;" class="btn btn-danger" onclick="javascript:$(this).parents(\'tr\').parents(\'tr\').remove();">메뉴삭제</button>' +
-					'<img src="' + modal_img.attr('src') + '" style="width:100px;height:100px;float:right;">' + 
+					'<td>' + modal_menu + '</td>' +
+					'<td rowspan="2">';
+					if( develop == true) 
+						div += '<button style="float:right;" class="btn btn-danger" onclick="javascript:$(this).parents(\'li\').remove();">메뉴삭제</button>';
+						
+					div +=
+					'<img src="' + modal_img + '" style="width:100px;height:100px;float:right;">' + 
 					'</td>' + 
 					'</tr>' +
 					'<tr>' +
-					'<td class="price">' + modal_price.val() + '</td>' +
+					'<td class="price">' + modal_price + '</td>' +
 					'<td></td>' + 
 					'</tr>' +
 					'</table>' + 
-					'</td></tr>');
+					'</li>';
 	
-	$(last_tr).before($div);
-	
-	items_json_result.category.forEach(function(item){
-		if( $(item).parents(item.name) != null ){
-			item.items.push({	name : modal_menu.val(),
-								price :modal_price.val(),
-								img : modal_img.attr('src') });
-			return;
-		}
-	});
-	modal.modal('hide');
+	if(category != null){
+		$('a[href^="#collapse"]').each(function(index,a){
+			if(a.innerText == category)
+				$(a).parents('.panel').find('ul').children('li').last().before(div);
+		});
+	}
+	else
+		$(selected).before(div);
 }
-</script>
 
+function existSameCategory(name){
+	var found = false;
+	
+	$('.panel-heading').each(function(index, element){
+		if( $(element).find('a').text() == name )
+			found = true;
+	});
+	
+	return found;
+}
+
+function update(){
+	var data_json = {categories : [], options : []};
+	var panels = $('#accordion').children('.panel');
+	var options = $('#option-ul').children('li');
+	
+	// options 먼저 채우기
+	options.each(function(index, element){
+		var option = { id : "", name : "", price : ""};
+		var ele = $(element);
+		option.id = ele.find('input[name="id"]').val();
+		option.name = ele.find('input[name="name"]').val();
+		option.price = ele.find('input[name="price"]').val();
+		data_json.options.push(option);
+	});
+	
+	// categories 채우기
+	panels.each(function(index, element){
+		var category = {name : "", items : []};
+		var ele = $(element);
+		category.name = ele.find('.panel-heading a').text();
+		
+		ele.find('form').each(function(index, element){
+			var item = {id : "", name : "", price : "", img : ""};
+			var ele = $(element);
+			item.id = ele.find('input[name="id"]').val();
+			item.name = ele.find('input[name="name"]').val();
+			item.price = ele.find('input[name="price"]').val();
+			item.img = ele.find('input[name="img"]').val();
+			category.items.push(item);
+		});
+		
+		data_json.categories.push(category);
+	});
+	
+	var store_id = $('#hidden_data').children('input[name="id"]').val();
+	var csrf = $('#hidden_data').children('input[name="_csrf"]').val();
+	var url = '/store/' + store_id +'/menu';
+ 	var header = $("input[name='_csrf_header']").attr("content");
+	
+	$.ajax({ url: url,
+			 type : 'put',
+			 data : JSON.stringify(data_json),
+			 contentType : 'application/json; charset=utf-8',
+			 beforeSend : function(xhr){   
+				xhr.setRequestHeader(header, csrf);
+            },
+			 success : function(result){
+				if(result == 'ok'){
+					alert('수정이 완료되었습니다');
+					location.replace('/store/store-list');
+				}
+			 }
+		});
+}
+
+</script>
+<div th:if="${menu_optionJSON != null}">
+<script th:inline="javascript">
+
+function loadMenuOptions(develop){
+	var loadStringJSON = [[${menu_optionJSON}]];
+	var loadJSON = JSON.parse(loadStringJSON);
+	
+	console.log(loadJSON);
+	if(develop == true){
+		loadJSON.categories.forEach(element =>{
+			add_category(element.name,true);
+			
+			element.items.forEach(item => {
+				add_menu(item.id, item.img, item.name, item.price, element.name, true);
+			});// foreach
+		
+		loadJSON.options.forEach(element => {
+			add_option(element.id, element.name, element.price, true);			
+		}); // foreach
+		}); // foreach
+	}else{
+		
+	}
+}
+
+loadMenuOptions(true);
+</script>
+</div>
+<form th:action="@{/}" id="hidden_data" method="put">
+<input type="hidden" id="_csrf_header" name="_csrf_header" th:content="${_csrf.headerName}"/>
+<input type="hidden" name="id" th:value="${store.store_pk}" >
+</form>
 
 </div>
 </body>

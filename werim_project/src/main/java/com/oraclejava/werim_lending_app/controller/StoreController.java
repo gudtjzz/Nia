@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -11,7 +12,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -120,7 +124,16 @@ public class StoreController {
 	public String updateMenu(Model model, @PathVariable("store_pk") int store_pk) {
 		model.addAttribute("contents", "/user/store/store-update-menu :: store-update-menu-page");
 		model.addAttribute("store", storeService.findById(store_pk));
-
+		model.addAttribute("menu_optionJSON", storeService.getMenuOptionJSON(store_pk));
+		
 		return "/user/userLayout";
+	}
+	
+	@ResponseBody
+	@PutMapping("/{id}/menu")
+	public String updateStoreMenu(@PathVariable String id, @RequestBody String data_json) {
+		storeService.registerNUpdateMenu(data_json, Integer.parseInt(id) );
+
+		return "ok";
 	}
 }

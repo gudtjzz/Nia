@@ -24,6 +24,7 @@ user_id number,
 owner_name varchar2(100),
 business_number varchar2(20),
 name varchar2(100),
+tel varchar2(12),
 address varchar2(255),
 category varchar2(20),
 franchise number,
@@ -39,10 +40,12 @@ menu_pk number primary key,
 store_pk number,
 name varchar2(50),
 price number,
-image_url blob,
+img_pk number,
 category varchar2(20),
 constraint fk_menu FOREIGN key(store_pk)
-REFERENCES store(store_pk)
+REFERENCES store(store_pk),
+constraint fk_menu_img foreign key(img_pk)
+references img_file(img_pk)
 );
 
 create table options(
@@ -50,7 +53,6 @@ option_pk number primary key,
 store_pk number,
 name varchar2(50),
 price number,
-image blob,
 constraint fk_option foreign key(store_pk)
 references store(store_pk)
 );
