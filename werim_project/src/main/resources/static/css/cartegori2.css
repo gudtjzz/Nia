@@ -12,11 +12,15 @@
 
 .navbar{
 	margin-bottom: 0px;
+	
 }
 #navbarResponsive{
 	text-align: right;
 }
-
+.navbar-nav>li{
+	display: flex;
+	
+}
 
 #menu1 ul li{
 	float: left;
@@ -29,6 +33,12 @@
 
 #menu1 ul li a{
 	display: block;
+	
+}
+
+#navbarResponsive{
+	display: flex!important;
+	
 }
 
 

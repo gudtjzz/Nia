@@ -21,8 +21,8 @@
 
 <body>
 
-  <!-- Navigation -->
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+	 <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" style="margin-bottom: 0px;">
     <div class="container">
       <a class="navbar-brand" href="/">여기저기거기</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
@@ -35,9 +35,9 @@
               <span class="sr-only">(current)</span>
             </a>
           </li>
-          <li class="nav-item">
+          <li class="nav-item" >
             <a sec:authorize-expr="!isAuthenticated()" class="nav-link" href="/login">Login</a>
-             <a sec:authorize-expr="isAuthenticated()" class="nav-link" th:href="@{/user/userLayout}">마이페이지</a>
+            <a sec:authorize-expr="isAuthenticated()" class="nav-link" th:href="@{/user/userLayout}">마이페이지</a>
             <a sec:authorize-expr="isAuthenticated()" class="nav-link" href="javascript:logout();">Logout</a>
             <form id="logout" method="post" th:action="@{/logout}"></form>
             <script>function logout(){
@@ -48,24 +48,53 @@
       </div>
     </div>
   </nav>
-  
-         <!-- 기본 가테고리  -->
-<div id="menu1"> 
-      <ul>
-	<li><a href="chicken">치킨</a></li>
-	<li><a href="pizza">피자</a></li>
-	<li><a href="middlefood">중식</a></li>
-	<li><a href="koreanfood">한식</a></li>
-	<li><a href="japanesefood">일식/돈까스</a></li>
-	<li><a href="jokbo">족발/보쌈</a></li>
-	<li><a href="yasik">야식</a></li>
-	<li><a href="boonsik">분식</a></li>
-	<li><a href="cafe">카페/디저트</a></li>
-	<style>
-ul{
-   list-style:none;
-   }
-</style>
+	<!-- 사이드바 -->
+	
+	<div class="container-fluid">
+		<div class="row">
+			<div id="menu1">
+				<ul class="nav nav-pills nav-stacked">
+					<li role="presentation">
+						<a th:href="@{'chicken'}">치킨</a>
+					</li>
+					<li role="presentation">
+						<a th:href="@{'pizza'}">피자</a>
+					</li>
+					
+					<li role="presentation">
+						<a th:href="@{'middlefood'}">중식</a>
+					</li>
+					
+					<li role="presentation">
+						<a th:href="@{'koreanfood'}">한식</a>
+					</li>
+					
+					<li role="presentation">
+						<a th:href="@{'japanesefood'}">일식/돈까스</a>
+					</li>
+					
+					<li role="presentation">
+						<a th:href="@{'jokbo'}">족발/보쌈</a>
+					</li>
+					
+					<li role="presentation">
+						<a th:href="@{'yasik'}">야식</a>
+					</li>
+					
+					<li role="presentation">
+						<a th:href="@{'boonsik'}">분식</a>
+					</li>
+					
+					<li role="presentation">
+						<a th:href="@{'cafe'}">카페/디저트</a>
+					</li>
+					</ul>
+
+		</div>
+	</div>	
+	
+	
+</div>
       </ul>
 </div>
 
