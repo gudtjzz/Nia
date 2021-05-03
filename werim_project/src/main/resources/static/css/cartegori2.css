@@ -76,3 +76,15 @@
 	display: flex;
 	
 }
+
+
+
+.py-5 {
+	position: fixed;
+	bottom: 0;
+	width: 100%
+}
+
+
+
+
